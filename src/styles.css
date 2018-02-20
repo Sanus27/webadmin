@@ -1,1 +1,136 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  overflow-x: hidden;
+}
+.card-body,
+.card-title,
+.card-subtitle,
+.card-text{
+  background: #fff !important;
+}
+.agregar{
+  cursor: pointer;
+  position: fixed;
+  z-index: 27;
+  width: 50px;
+  height: 50px;
+  bottom: 0px;
+  right: 0px;
+  margin-bottom: 11px;
+  margin-right: 11px;
+  border-radius: 100%;
+}
+.agregar img{
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+.card-imgs{
+  background: red;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+.card-imgs img{
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+}
+.card-title{
+
+  margin-top: 12px;
+}
+.card-text{
+  float: none;
+  clear: both;
+}
+a{
+  text-decoration: none;
+}
+.d-inline-block,
+.nav{
+  background: transparent !important;
+}
+.login{
+  margin-top: 5%;
+}
+.login img{
+  display: block;
+  width: 100px;
+  margin-bottom: 10px;
+}
+.formLogin{
+  padding: 10px;
+  border-radius: 10px;
+}
+.form-group{
+  background: transparent;
+}
+.pie{
+  display: block;
+  text-align: center;
+  width: 100%;
+  background: #F5F6FA;
+  padding: 10px;
+  font-size: 11px;
+}
+.pie.abajo{
+  position: fixed;
+  bottom: 0px;
+}
+.pie.abajo.inicio{
+  background: #fff;
+  border-top: solid 1px #E0E0E0;
+}
+nav{
+  display: block;
+}
+.menu{
+  background: #fff;
+  display: block;
+  height: 92vh;
+  border-right: solid 1px #E0E0E0;
+}
+.menu a{
+  display: block;
+  padding: 10px;
+  width: 1000px;
+  border-bottom: solid 1px #E0E0E0;
+  color: #000;
+  background: transparent;
+  text-decoration: none !important;
+}
+.menu a:hover,
+.menuActive{
+  color: #fff !important;
+  background: #FF6200 !important;
+}
+.menu i{
+  background: transparent;
+}
+.contenido{
+  display: block;
+  width: 98%;
+  margin-top: 14px;
+  height: 81vh;
+}
+.modal{
+  background: rgba(0,0,0,0.2);
+}
+.modal-dialog{
+  border-radius: 5px;
+}
+.card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+}

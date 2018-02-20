@@ -1,0 +1,90 @@
+<nav>
+  <app-header></app-header>
+</nav>
+
+<div class="row">
+  <div class="col-md-2 menu">
+    <app-menu></app-menu>
+  </div>
+  <div class="col-md-10">
+    <div class="contenido">
+
+
+
+
+
+
+
+      <div class="card-columns">
+
+
+        <div class="card">
+            <div class="card-body">
+              <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link badge badge-danger"  data-toggle="modal" data-target="#eliminarDoctor">Eliminar</a>
+              <a href="#" class="badge badge-success" data-toggle="modal" data-target="#crearDoctor">Actualizar</a>
+            </div>
+        </div>
+
+
+      </div>
+
+
+
+      <div class="agregar" data-toggle="modal" data-target="#crearDoctor">
+        <img src="./assets/img/icon-mas.png" alt="">
+      </div>
+
+      <!-- Modal -->
+<div class="modal fade" id="crearDoctor" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="eliminarDoctor" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    </div><!-- CONTENIDO -->
+  </div>
+</div>
+
+<div class="pie abajo inicio">
+  <app-pie></app-pie>
+</div>

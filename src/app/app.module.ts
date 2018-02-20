@@ -1,16 +1,40 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
 import { AppComponent } from './app.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { PieComponent } from './components/pie/pie.component';
 
+//ROUTER
+import { LoginComponent } from './pages/login/login.component';
+import { APP_ROUTING } from './app.router';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { DoctoresComponent } from './pages/doctores/doctores.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { InicioComponent } from './pages/inicio/inicio.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    PieComponent,
+    UsuariosComponent,
+    DoctoresComponent,
+    HeaderComponent,
+    MenuComponent,
+    InicioComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    APP_ROUTING,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
