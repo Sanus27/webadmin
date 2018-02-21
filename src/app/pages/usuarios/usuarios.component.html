@@ -18,12 +18,11 @@
       <div class="card-columns">
 
 
-        <div class="card">
+        <div class="card" *ngFor="let user of listUser | async | filtro: 'Admin' ">
             <div class="card-body">
               <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link badge badge-danger"  data-toggle="modal" data-target="#eliminarDoctor">Eliminar</a>
+              <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
+              <a href="#" class="card-link badge badge-danger" data-toggle="modal" data-target="#eliminarDoctor">Eliminar</a>
               <a href="#" class="badge badge-success" data-toggle="modal" data-target="#crearDoctor">Actualizar</a>
             </div>
         </div>
@@ -42,17 +41,31 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title">Nuevo administrador</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+
+        <p class="modal-subtitle">La contraseña generada es: Sanus27</p>
+        <div class="form-group">
+          <input type="text" class="form-control" name="name" [(ngModel)]="users.name" placeholder="Nombre">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" name="lastname" [(ngModel)]="users.lastname" placeholder="Apellido">
+        </div>
+
+        <div class="form-group">
+          <input type="email" class="form-control" name="email" [(ngModel)]="users.email" placeholder="Correo electronico">
+        </div>
+
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
       </div>
     </div>
   </div>
@@ -69,11 +82,11 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        ¿Está seguro que desea eliminar este administrador?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
       </div>
     </div>
   </div>

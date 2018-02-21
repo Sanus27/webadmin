@@ -28,7 +28,7 @@ export class Auth_Service {
     return this._db.doc(path);
   }
 
-  public getInfoUser( ){
+  public getInfoUser(){
       this.showUser( this.usuario.uid ).valueChanges().subscribe( data => {
         this.userInfo.push( data );
         return this.userInfo;

@@ -22,6 +22,11 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 //SERVICES
 import { Auth_Service } from './services/auth_service';
 import { LocalStorage_Service } from './services/localstorage_service';
+import { UsuariosService } from './services/usuarios.service';
+import { DoctoresService } from './services/doctores.service';
+
+//PIPES
+import { FiltroPipe } from './pipes/filtro.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,8 @@ import { LocalStorage_Service } from './services/localstorage_service';
     DoctoresComponent,
     HeaderComponent,
     MenuComponent,
-    InicioComponent
+    InicioComponent,
+    FiltroPipe
   ],
   imports: [
     FormsModule,
@@ -45,6 +51,8 @@ import { LocalStorage_Service } from './services/localstorage_service';
   ],
   providers: [
     Auth_Service,
+    UsuariosService,
+    DoctoresService,
     LocalStorage_Service
   ],
   bootstrap: [AppComponent]

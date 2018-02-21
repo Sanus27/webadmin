@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorage_Service } from '../../services/localstorage_service';
@@ -10,7 +10,7 @@ declare var $:any;
   templateUrl: './login.component.html',
   styleUrls: []
 })
-export class LoginComponent{
+export class LoginComponent  implements OnInit{
 
   private titleModal:string;
   private bodyModal:string;
@@ -20,6 +20,23 @@ export class LoginComponent{
     this.loadModal = true;
     this.avancedModal = false;
   }
+
+  ngOnInit() {
+
+    let uid = this._sesion.cargarSesion();
+    if( uid){
+      this._auth.showUser(uid).valueChanges().subscribe( resp =>{
+        let dataUser = resp;
+        if(dataUser["tipo"] === "Admin"){
+          this._router.navigate(["/inicio"]);
+        }
+      })
+    } else {
+      this._router.navigate(["/login"]);
+    }
+
+  }
+
   public login:object = {
     email: undefined,
     password: undefined

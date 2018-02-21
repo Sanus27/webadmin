@@ -11,6 +11,12 @@
 .card-text{
   background: #fff !important;
 }
+.card-columns .card-title{
+  font-size: 15px;
+}
+.modal-subtitle{
+  font-size: 15px;
+}
 .load img{
   display: block;
   width: 15px;
