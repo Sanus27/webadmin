@@ -18,12 +18,12 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let user of listUser | async | filtro: 'Admin' ">
+        <div class="card" *ngFor="let user of listUser | async | filtro: 'Admin'; let i = index; ">
             <div class="card-body">
               <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
               <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
-              <a href="#" class="card-link badge badge-danger" data-toggle="modal" data-target="#eliminarDoctor">Eliminar</a>
-              <a href="#" class="badge badge-success" data-toggle="modal" data-target="#crearDoctor">Actualizar</a>
+              <a class="card-link badge badge-danger text-white" (click)="showDelete(i);">Eliminar</a>
+              <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
             </div>
         </div>
 
@@ -32,16 +32,23 @@
 
 
 
-      <div class="agregar" data-toggle="modal" data-target="#crearDoctor">
+      <div class="agregar" (click)="showModal(1, 0);">
         <img src="./assets/img/icon-mas.png" alt="">
       </div>
 
       <!-- Modal -->
-<div class="modal fade" id="crearDoctor" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Nuevo administrador</h5>
+        <h5 class="modal-title">
+          <div *ngIf="!updated">
+            Agregar usuario
+          </div>
+          <div *ngIf="updated">
+            Modificar datos
+          </div>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -57,7 +64,7 @@
           <input type="text" class="form-control" name="lastname" [(ngModel)]="users.lastname" placeholder="Apellido">
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="!updated">
           <input type="email" class="form-control" name="email" [(ngModel)]="users.email" placeholder="Correo electronico">
         </div>
 
@@ -65,14 +72,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
+        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="eliminarDoctor" tabindex="-1" role="dialog">
+<div class="modal fade" id="eliminarUsuario" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">

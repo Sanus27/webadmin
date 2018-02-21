@@ -6,6 +6,8 @@ import { Auth_Service } from '../../services/auth_service';
 import { LocalStorage_Service } from '../../services/localstorage_service';
 import { UsuariosService } from '../../services/usuarios.service';
 
+declare var $:any;
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -13,6 +15,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 export class UsuariosComponent implements OnInit {
 
   public uid:any;
+  public updated:boolean;
   public listUser: Observable<any[]>;
   constructor( public _router:Router, public _auth:Auth_Service, public _sesion:LocalStorage_Service, public _user:UsuariosService, public _db:AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
@@ -39,6 +42,39 @@ export class UsuariosComponent implements OnInit {
       this._router.navigate(["/login"]);
     }
 
+  }
+
+  public showModal( id, user ){
+    if( id == 1){
+      this.updated = false;
+    }
+    if( id == 2){
+      this.updated = true;
+      console.log(user.uid);
+      this.users = {
+        name: user.nombre,
+        lastname: user.apellido,
+        email: undefined
+      }
+
+    }
+    $('#modal').modal('show');
+  }
+
+  public showDelete( uid ){
+    //this.getUser(uid);
+    console.log(uid);
+    $('#eliminarUsuario').modal('show');
+  }
+
+  public updateUser(){
+    console.log("modificando...");
+    // this._user.createAdmin( id, name, lastname).then( data => {
+    //
+    // }).catch( err => {
+    //   console.log("err");
+    //   console.log(err);
+    // })
   }
 
   public createUser(){

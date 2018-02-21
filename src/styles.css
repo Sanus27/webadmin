@@ -14,6 +14,9 @@
 .card-columns .card-title{
   font-size: 15px;
 }
+.text-white{
+  cursor: pointer;
+}
 .modal-subtitle{
   font-size: 15px;
 }
