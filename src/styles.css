@@ -11,6 +11,13 @@
 .card-text{
   background: #fff !important;
 }
+.load img{
+  display: block;
+  width: 15px;
+  float: left;
+  margin-right: 27px;
+  margin-top: 10px;
+}
 .agregar{
   cursor: pointer;
   position: fixed;

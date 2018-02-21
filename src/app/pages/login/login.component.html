@@ -1,18 +1,46 @@
 <div class="row">
   <div class="col-sm-3 mx-auto login">
     <img class="text-center mx-auto" src="./assets/img/icon-sanus.png" alt="Sanus">
-    <form class="formLogin">
+    <form class="formLogin" #formLogin="ngForm">
       <div class="form-group">
-        <input type="email" class="form-control" placeholder="Correo electronico">
+        <input type="email" class="form-control" name="email" [(ngModel)]="login.email" placeholder="Correo electronico">
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Contrasena">
+        <input type="password" class="form-control" name="password" [(ngModel)]="login.password" placeholder="Contrasena">
       </div>
-      <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+      <button type="submit" class="btn btn-primary" (click)="startLogin();">Iniciar sesion</button>
     </form>
   </div>
 </div>
 
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <div class="load" *ngIf="loadModal">
+            <img src="./assets/img/preloader.gif" alt="cargando"> Cargando
+          </div>
+          <div class="load" *ngIf="!loadModal">
+            {{titleModal}}
+          </div>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="!loadModal">
+        <div class="load" *ngIf="loadModal">
+          <img src="./assets/img/preloader.gif" alt="cargando">
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="avancedModal">
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Iniciar sesion</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="pie abajo">
   <app-pie></app-pie>
