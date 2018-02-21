@@ -34,6 +34,9 @@
         <div class="load" *ngIf="loadModal">
           <img src="./assets/img/preloader.gif" alt="cargando">
         </div>
+        <div class="load" *ngIf="!loadModal">
+          {{bodyModal}}
+        </div>
       </div>
       <div class="modal-footer" *ngIf="avancedModal">
         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Iniciar sesion</button>

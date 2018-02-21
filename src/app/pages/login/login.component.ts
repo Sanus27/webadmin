@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorage_Service } from '../../services/localstorage_service';
 
@@ -15,11 +16,9 @@ export class LoginComponent{
   private bodyModal:string;
   private avancedModal:boolean;
   private loadModal:boolean;
-  constructor( public _auth:Auth_Service, public _sesion:LocalStorage_Service ) {
+  constructor( public _auth:Auth_Service, public _sesion:LocalStorage_Service, public _router:Router ) {
     this.loadModal = true;
     this.avancedModal = false;
-    this.titleModal = "Acceso restringido";
-    this.bodyModal = "Está cuenta no tiene los premisos para entrar al sistema";
   }
   public login:object = {
     email: undefined,
@@ -27,7 +26,6 @@ export class LoginComponent{
   };
 
   public startLogin() {
-    this.loadModal = true;
     $('#modal').modal('show');
       setTimeout(() => {
 
@@ -35,16 +33,49 @@ export class LoginComponent{
         let password = this.login["password"];
         this._auth.login( email, password ).then( resp => {
             $('#modal').modal('hide');
-            this.loadModal = false;
-            let dataUser = this._auth.userInfo;
-            let typeUser = dataUser[0]["tipo"];
-            this._sesion.guardarSesion( typeUser );
-            console.log( resp );
+            setTimeout(() => {
+
+              let dataUser = this._auth.userInfo;
+              let typeUser = dataUser[0]["tipo"];
+              if( typeUser === "Admin"){
+                this._sesion.guardarSesion( this._auth.usuario["uid"] );
+                this._router.navigate(["/inicio"]);
+              } else {
+                this.loadModal = false;
+                this.titleModal = "Acceso restringido";
+                this.bodyModal = "Está cuenta no tiene los premisos para entrar al sistema";
+                $('#modal').modal('show');
+              }
+
+            }, 500);
+
+
         }).catch( error => {
+
+          $('#modal').modal('hide');
+          this.loadModal = false;
+          setTimeout(() => {
+              $('#modal').modal('show');
+              this.titleModal = "Se ha producido un error";
+              if( error.code == "auth/invalid-email"){
+                this.login["email"] = undefined;
+                this.bodyModal = "Este correo electronico no es valido";
+              }
+              if( error.code == "auth/user-not-found"){
+                this.login["email"] = undefined;
+                this.bodyModal = "Este correo electronico no existe";
+              }
+              if( error.code == "auth/wrong-password"){
+                this.login["email"] = undefined;
+                this.login["password"] = undefined;
+                this.bodyModal = "La contrasena es incorrecta";
+              }
+
+          }, 500);
 
         })
 
-      }, 5000);
+      }, 1000);
 
   }
 

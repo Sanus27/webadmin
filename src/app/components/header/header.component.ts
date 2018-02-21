@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Auth_Service } from '../../services/auth_service';
+import { LocalStorage_Service } from '../../services/localstorage_service';
+
+declare var $:any;
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent{
 
-  constructor() { }
+  constructor( public _router:Router, public _auth:Auth_Service, public _sesion:LocalStorage_Service ) {}
 
-  ngOnInit() {
-    
+  public exit(){
+    $('#cerrarsesion').modal('hide');
+    this._auth.signOut();
+    this._sesion.eliminarSesion();
+    this._router.navigate(["/login"]);
+    console.log("saliendo...");
   }
 
 }

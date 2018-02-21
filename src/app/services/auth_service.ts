@@ -9,23 +9,34 @@ export class Auth_Service {
   public usuario: any = {};
   public userInfo:any[] = [];
   constructor( private _db: AngularFirestore, public _auth: AngularFireAuth ) {
-    //console.log("iniciando servicio auth");
+    this.stateUser();
   }
 
-  public mostrarUsuarios( uid ){
-    const path = `/usuarios/${uid}`;
+  public stateUser(){
+    this._auth.authState.subscribe( user => {
+
+      if( !user ){
+        return;
+      }
+      this.usuario.uid = user.uid;
+
+    })
+  }
+
+  public showUser( uid ){
+    let path = `/usuarios/${uid}`;
     return this._db.doc(path);
   }
 
-  public obtenerInfoUser(){
-    this.mostrarUsuarios( this.usuario.uid ).valueChanges().subscribe( data => {
-      this.userInfo.push( data );
-      return this.userInfo;
-    });
+  public getInfoUser( ){
+      this.showUser( this.usuario.uid ).valueChanges().subscribe( data => {
+        this.userInfo.push( data );
+        return this.userInfo;
+      });
   }
 
   public login( email:string, password:string ){
-    this.obtenerInfoUser();
+    this.getInfoUser();
     return this._auth.auth.signInWithEmailAndPassword( email, password );
   }
 
