@@ -26,10 +26,12 @@ export class LoginComponent  implements OnInit{
     let uid = this._sesion.cargarSesion();
     if( uid){
       this._auth.showUser(uid).valueChanges().subscribe( resp =>{
-        let dataUser = resp;
-        if(dataUser["tipo"] === "Admin"){
-          this._router.navigate(["/inicio"]);
-        }
+          let dataUser = resp;
+          if ( dataUser != null ){
+            if(dataUser["tipo"] === "Admin"){
+              this._router.navigate(["/inicio"]);
+            }
+          }
       })
     } else {
       this._router.navigate(["/login"]);

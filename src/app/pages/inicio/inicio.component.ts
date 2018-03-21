@@ -16,7 +16,7 @@ export class InicioComponent implements OnInit {
   ngOnInit() {
 
     let uid = this._sesion.cargarSesion();
-    if( uid){
+    if( uid ){
       this._auth.showUser(uid).valueChanges().subscribe( resp =>{
         let dataUser = resp;
         if(dataUser["tipo"] != "Admin"){
@@ -26,7 +26,7 @@ export class InicioComponent implements OnInit {
     } else {
       this._router.navigate(["/login"]);
     }
-    
+
   }
 
 }

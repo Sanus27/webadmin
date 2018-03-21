@@ -18,6 +18,7 @@ import { DoctoresComponent } from './pages/doctores/doctores.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
+import { HospitalesComponent } from './pages/hospitales/hospitales.component';
 
 //SERVICES
 import { Auth_Service } from './services/auth_service';
@@ -27,6 +28,7 @@ import { DoctoresService } from './services/doctores.service';
 
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { FiltroPipe } from './pipes/filtro.pipe';
     HeaderComponent,
     MenuComponent,
     InicioComponent,
-    FiltroPipe
+    FiltroPipe,
+    HospitalesComponent
   ],
   imports: [
     FormsModule,
