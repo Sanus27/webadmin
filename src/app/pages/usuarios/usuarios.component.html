@@ -18,7 +18,7 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let user of listUser | async | filtro: 'Admin'; let i = index; ">
+        <div class="card" *ngFor="let user of arr | filtro: 'Admin';">
             <div class="card-body">
               <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
               <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>

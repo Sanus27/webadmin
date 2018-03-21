@@ -15,95 +15,82 @@ declare var $:any;
 })
 export class UsuariosComponent implements OnInit {
 
-  private uid:any;
-  private updated:boolean;
-  private listUser: Observable<Usuarios[]>;
-  constructor( private _router:Router, private _auth:Auth_Service, private _sesion:LocalStorageService, private _user:UsuariosService, private _db:AngularFirestore ) {
-    this.uid = this._sesion.cargarSesion();
-    this.listUser = this._db.collection('usuarios').valueChanges()
-  }
+    private uid:any;
+    private updated:boolean;
+    private arr: Usuarios[] = [];
+    private users = { lastname: '', name: '', email: '', password: 'Sanus27' };
 
-  private users:object = {
-    name: undefined,
-    lastname: undefined,
-    email: undefined
-  }
+    constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService ) {
+      this.uid = this._sesion.cargarSesion();
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-    let uid = this._sesion.cargarSesion();
-    if( uid){
-      this._auth.showUser(uid).valueChanges().subscribe( resp =>{
-        let dataUser = resp;
-        if(dataUser["tipo"] != "Admin"){
-          this._router.navigate(["/login"]);
+      let uid = this._sesion.cargarSesion();
+      if( uid){
+          this._auth.showUser(uid).valueChanges().subscribe( resp =>{
+              let dataUser = resp;
+              if(dataUser["tipo"] != "Admin"){
+                this._router.navigate(["/login"]);
+              } else {
+
+                this._user.getUsers().subscribe(
+                  (user: Usuarios[]) => {
+                    this.arr = user;
+                  }
+                );
+
+              }
+          })
+      } else {
+        this._router.navigate(["/login"]);
+      }
+
+    }
+
+
+    private showModal( id, user ){
+      if( id == 1){
+        this.updated = false;
+      }
+      if( id == 2){
+        this.updated = true;
+        this.users = {
+          name: user.nombre,
+          lastname: user.apellido,
+          email: undefined,
+          password: 'Sanus27',
         }
-      })
-    } else {
-      this._router.navigate(["/login"]);
-    }
-
-  }
-
-  private showModal( id, user ){
-    if( id == 1){
-      this.updated = false;
-    }
-    if( id == 2){
-      this.updated = true;
-      this.users = {
-        name: user.nombre,
-        lastname: user.apellido,
-        email: undefined
-      }
-
-    }
-    $('#modal').modal('show');
-  }
-
-  private showDelete( user ){
-    this.uid = user;
-    $('#eliminarUsuario').modal('show');
-  }
-
-  private delete(){
-    $('#eliminarUsuario').modal('hide');
-    this._user.delete( "gof9o1wAyuar47uW3WTMUOzBtQo2" )
-  }
-
-  private updateUser(){
-    console.log("modificando...");
-    let name = this.users["name"];
-    let lastname = this.users["lastname"];
-    this._user.update( "gof9o1wAyuar47uW3WTMUOzBtQo2",  name, lastname )
-    $('#modal').modal('hide');
-  }
-
-  private createUser(){
-    let name = this.users["name"];
-    let lastname = this.users["lastname"];
-    let email = this.users["email"];
-    let password = "Sanus27";
-    this._user.createUser( email, password ).then( resp => {
-      console.log("resp");
-      let id = resp.uid;
-      this._user.createAdmin( id, name, lastname).then( data => {
-        $('#modal').modal('hide');
-      }).catch( err => {
-        console.log("err");
-        console.log(err);
-      })
-    }).catch( error => {
-      if(error.code == "auth/email-already-in-use"){
 
       }
-      if(error.code == "auth/invalid-email"){
+      $('#modal').modal('show');
+    }
 
-      }
-      console.log("error");
-      console.log(error);
-    })
-  }
+    private showDelete( user ){
+      this.uid = user;
+      $('#eliminarUsuario').modal('show');
+    }
+
+    private createUser(){
+      let createUsr = this._user.createUser(this.users);
+      //console.log(createUsr)
+      //this.users.lastname = '';
+      //this.users.name = '';
+      //this.users.email = '';
+    }
+
+    private delete(){
+      $('#eliminarUsuario').modal('hide');
+      this._user.deleteUser( this.uid );
+    }
+
+    private updateUser(){
+      console.log("modificando...");
+      let name = this.users["name"];
+      let lastname = this.users["lastname"];
+      this._user.update( this.uid )
+      $('#modal').modal('hide');
+    }
 
 
 
