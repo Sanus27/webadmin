@@ -73,10 +73,6 @@ export class UsuariosComponent implements OnInit {
 
     private createUser(){
       let createUsr = this._user.createUser(this.users);
-      //console.log(createUsr)
-      //this.users.lastname = '';
-      //this.users.name = '';
-      //this.users.email = '';
     }
 
     private delete(){
@@ -85,10 +81,9 @@ export class UsuariosComponent implements OnInit {
     }
 
     private updateUser(){
-      console.log("modificando...");
       let name = this.users["name"];
       let lastname = this.users["lastname"];
-      this._user.update( this.uid )
+      this._user.update( this.uid, name, lastname )
       $('#modal').modal('hide');
     }
 

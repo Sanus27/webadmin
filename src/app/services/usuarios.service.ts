@@ -13,7 +13,7 @@ export class UsuariosService {
     userscollection: AngularFirestoreCollection<Usuarios>;
     users: Observable<Usuarios[]>;
     userDoc: AngularFirestoreDocument<Usuarios>;
-    
+
     constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
 
       this.userscollection = this._db.collection('usuarios');
@@ -35,7 +35,7 @@ export class UsuariosService {
     }
 
     public createUser(user) {
-      console.log(user)
+
       this._auth.auth.createUserWithEmailAndPassword( user.email, user.password).then( (resp => {
           let uid = resp.uid
 
@@ -53,21 +53,20 @@ export class UsuariosService {
     }
 
     public deleteUser( user ) {
-      user.id.delete().then(function() {
-        this._db.collection("usuarios").doc( user.id ).delete().then( () =>{
-          return "success"
-        })
-      }).catch(function(error) {
-        // An error happened.
-      });
+      let uid:string = user.id
+      console.log( uid )
+      this._db.collection("usuarios").doc( uid ).delete().then( () =>{
+
+      })
+
     }
 
-    public update(user) {
-      this._db.collection("usuarios").doc( user.id ).update({
-        apellido: user.lastname,
-        nombre: user.name,
+    public update( id, name, lastname ) {
+      this._db.collection("usuarios").doc( id ).update({
+        apellido: lastname,
+        nombre: name,
       }).then( () =>{
-        return "success"
+        console.log( "simon" )
       })
     }
 
