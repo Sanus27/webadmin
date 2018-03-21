@@ -22,10 +22,10 @@ import { HospitalesComponent } from './pages/hospitales/hospitales.component';
 
 //SERVICES
 import { Auth_Service } from './services/auth_service';
-import { LocalStorage_Service } from './services/localstorage_service';
+import { LocalStorageService } from './services/localstorage.service';
 import { UsuariosService } from './services/usuarios.service';
 import { DoctoresService } from './services/doctores.service';
-
+import { HospitalesService } from './services/hospitales.service';
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
 
@@ -56,7 +56,8 @@ import { FiltroPipe } from './pipes/filtro.pipe';
     Auth_Service,
     UsuariosService,
     DoctoresService,
-    LocalStorage_Service
+    HospitalesService,
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })

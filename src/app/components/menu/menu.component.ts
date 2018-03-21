@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth_Service } from '../../services/auth_service';
-import { LocalStorage_Service } from '../../services/localstorage_service';
 
 @Component({
   selector: 'app-menu',

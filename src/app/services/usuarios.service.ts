@@ -4,6 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { Usuarios } from '../models/Usuarios';
 
 @Injectable()
 export class UsuariosService {
@@ -20,10 +21,26 @@ export class UsuariosService {
     let data = {
       apellido: lastname,
       nombre: name,
-      tipo: "Admin"
+      tipo: "Admin",
+      estado: "0"
     }
     return this._db.collection("usuarios").doc(uid).set(data);
   }
-  
+
+  public update( uid, name, lastname ){
+    this._db.collection("usuarios").doc( uid ).update({
+      apellido: lastname,
+      nombre: name,
+    }).then( () =>{
+      return "success"
+    })
+  }
+
+  public delete( uid ){
+    this._db.collection("usuarios").doc( uid ).delete().then( () =>{
+      return "success"
+    })
+  }
+
 
 }

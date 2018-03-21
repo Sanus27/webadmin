@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth_Service } from '../../services/auth_service';
-import { LocalStorage_Service } from '../../services/localstorage_service';
+import { LocalStorageService } from '../../services/localstorage.service';
 
 declare var $:any;
 
@@ -11,7 +11,7 @@ declare var $:any;
 })
 export class HeaderComponent{
 
-  constructor( public _router:Router, public _auth:Auth_Service, public _sesion:LocalStorage_Service ) {}
+  constructor( public _router:Router, public _auth:Auth_Service, public _sesion:LocalStorageService ) {}
 
   public exit(){
     $('#cerrarsesion').modal('hide');

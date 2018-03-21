@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class LocalStorage_Service {
+export class LocalStorageService {
 
   public guardarSesion( tipo ){
     localStorage.setItem("sesion", tipo);

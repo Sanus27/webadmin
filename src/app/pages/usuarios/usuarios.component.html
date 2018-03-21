@@ -22,7 +22,7 @@
             <div class="card-body">
               <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
               <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
-              <a class="card-link badge badge-danger text-white" (click)="showDelete(i);">Eliminar</a>
+              <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
               <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
             </div>
         </div>
@@ -93,7 +93,7 @@
         ¿Está seguro que desea eliminar este administrador?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Si</button>
+        <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
       </div>
     </div>

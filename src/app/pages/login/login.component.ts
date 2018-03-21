@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth_Service } from '../../services/auth_service';
-import { LocalStorage_Service } from '../../services/localstorage_service';
+import { LocalStorageService } from '../../services/localstorage.service';
 
 declare var $:any;
 
@@ -16,7 +16,7 @@ export class LoginComponent  implements OnInit{
   private bodyModal:string;
   private avancedModal:boolean;
   private loadModal:boolean;
-  constructor( public _auth:Auth_Service, public _sesion:LocalStorage_Service, public _router:Router ) {
+  constructor( public _auth:Auth_Service, public _sesion:LocalStorageService, public _router:Router ) {
     this.loadModal = true;
     this.avancedModal = false;
   }

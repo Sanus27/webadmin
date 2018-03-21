@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
-import { LocalStorage_Service } from '../../services/localstorage_service';
+import { LocalStorageService } from '../../services/localstorage.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import { Usuarios } from '../../models/Usuarios';
 
 declare var $:any;
 
@@ -14,15 +15,15 @@ declare var $:any;
 })
 export class UsuariosComponent implements OnInit {
 
-  public uid:any;
-  public updated:boolean;
-  public listUser: Observable<any[]>;
-  constructor( public _router:Router, public _auth:Auth_Service, public _sesion:LocalStorage_Service, public _user:UsuariosService, public _db:AngularFirestore ) {
+  private uid:any;
+  private updated:boolean;
+  private listUser: Observable<Usuarios[]>;
+  constructor( private _router:Router, private _auth:Auth_Service, private _sesion:LocalStorageService, private _user:UsuariosService, private _db:AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
     this.listUser = this._db.collection('usuarios').valueChanges()
   }
 
-  public users:object = {
+  private users:object = {
     name: undefined,
     lastname: undefined,
     email: undefined
@@ -44,13 +45,12 @@ export class UsuariosComponent implements OnInit {
 
   }
 
-  public showModal( id, user ){
+  private showModal( id, user ){
     if( id == 1){
       this.updated = false;
     }
     if( id == 2){
       this.updated = true;
-      console.log(user.uid);
       this.users = {
         name: user.nombre,
         lastname: user.apellido,
@@ -61,23 +61,25 @@ export class UsuariosComponent implements OnInit {
     $('#modal').modal('show');
   }
 
-  public showDelete( uid ){
-    //this.getUser(uid);
-    console.log(uid);
+  private showDelete( user ){
+    this.uid = user;
     $('#eliminarUsuario').modal('show');
   }
 
-  public updateUser(){
-    console.log("modificando...");
-    // this._user.createAdmin( id, name, lastname).then( data => {
-    //
-    // }).catch( err => {
-    //   console.log("err");
-    //   console.log(err);
-    // })
+  private delete(){
+    $('#eliminarUsuario').modal('hide');
+    this._user.delete( "gof9o1wAyuar47uW3WTMUOzBtQo2" )
   }
 
-  public createUser(){
+  private updateUser(){
+    console.log("modificando...");
+    let name = this.users["name"];
+    let lastname = this.users["lastname"];
+    this._user.update( "gof9o1wAyuar47uW3WTMUOzBtQo2",  name, lastname )
+    $('#modal').modal('hide');
+  }
+
+  private createUser(){
     let name = this.users["name"];
     let lastname = this.users["lastname"];
     let email = this.users["email"];
@@ -86,7 +88,7 @@ export class UsuariosComponent implements OnInit {
       console.log("resp");
       let id = resp.uid;
       this._user.createAdmin( id, name, lastname).then( data => {
-
+        $('#modal').modal('hide');
       }).catch( err => {
         console.log("err");
         console.log(err);
@@ -103,9 +105,6 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  public getUser( uid:string ){
-    let infoUser = this._db.collection("usuarios").doc(uid)
-    console.log(infoUser);
-  }
+
 
 }
