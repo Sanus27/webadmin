@@ -60,6 +60,12 @@ export class UsuariosComponent implements OnInit {
     private showModal( id, user ){
       if( id == 1){
         this.updated = false;
+        this.users = {
+          name: undefined,
+          lastname: undefined,
+          email: undefined,
+          password: 'Sanus27',
+        }
       }
       if( id == 2){
         this.updated = true;
@@ -123,7 +129,7 @@ export class UsuariosComponent implements OnInit {
 
     private updateUser(){
       this.err = false
-      this.result = false 
+      this.result = false
       this._user.update( this.uid, this.users ).then( (resp) => {
         this.result = true
         this.success = "Se han hecho los cambios correctamente"
