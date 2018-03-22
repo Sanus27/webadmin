@@ -18,15 +18,12 @@ export class UsuariosService {
       this.resp = "success"
       this.userscollection = this._db.collection('usuarios');
       this.users = this.userscollection.snapshotChanges().map(
-        changes => {
-          return changes.map(
-            a => {
-              const data = a.payload.doc.data() as Usuarios;
-              data.id = a.payload.doc.id;
-              return data;
-            });
-
+        changes => { return changes.map( a => {
+            const data = a.payload.doc.data() as Usuarios;
+            data.id = a.payload.doc.id;
+            return data;
         });
+      });
 
     }
 
@@ -77,7 +74,7 @@ export class UsuariosService {
     }
 
 
-    public deleteUser( user ) { 
+    public deleteUser( user ) {
 
       let uid:string = user.id
       return this._db.collection("usuarios").doc( uid ).delete()

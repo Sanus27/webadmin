@@ -28,6 +28,7 @@ import { DoctoresService } from './services/doctores.service';
 import { HospitalesService } from './services/hospitales.service';
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
+import { FinfotoPipe } from './pipes/finfoto.pipe';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { FiltroPipe } from './pipes/filtro.pipe';
     MenuComponent,
     InicioComponent,
     FiltroPipe,
-    HospitalesComponent
+    HospitalesComponent,
+    FinfotoPipe
   ],
   imports: [
     FormsModule,

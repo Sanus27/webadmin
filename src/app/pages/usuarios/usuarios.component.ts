@@ -22,7 +22,7 @@ export class UsuariosComponent implements OnInit {
     private uid:any;
     private updated:boolean;
     private arr: Usuarios[] = [];
-    private users = { lastname: '', name: '', email: '', password: 'Sanus27' };
+    private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27' };
 
     constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService ) {
       this.uid = this._sesion.cargarSesion();
@@ -42,11 +42,10 @@ export class UsuariosComponent implements OnInit {
                 this._router.navigate(["/login"]);
               } else {
 
-                this._user.getUsers().subscribe(
-                  (user: Usuarios[]) => {
+                this._user.getUsers().subscribe( (user: Usuarios[]) => {
                     this.arr = user;
-                  }
-                );
+                    console.log( this.arr )
+                })
 
               }
           })
@@ -61,6 +60,7 @@ export class UsuariosComponent implements OnInit {
       if( id == 1){
         this.updated = false;
         this.users = {
+          avatar: undefined,
           name: undefined,
           lastname: undefined,
           email: undefined,
@@ -70,6 +70,7 @@ export class UsuariosComponent implements OnInit {
       if( id == 2){
         this.updated = true;
         this.users = {
+          avatar: undefined,
           name: user.nombre,
           lastname: user.apellido,
           email: undefined,
