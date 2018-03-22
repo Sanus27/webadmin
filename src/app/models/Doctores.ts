@@ -5,4 +5,6 @@ export interface Doctores {
   estado?: string;
   tipo?: string;
   avatar?: string;
+  especialidad?: string;
+  cedula?: string;
 }

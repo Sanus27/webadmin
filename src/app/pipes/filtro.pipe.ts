@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filtro'
+  name: 'filtro',
+  pure: false
 })
 export class FiltroPipe implements PipeTransform {
 
@@ -10,7 +11,7 @@ export class FiltroPipe implements PipeTransform {
 
     if ( listas ) {
       for( let item of listas ){
-          if( item.tipo == "Admin"){
+          if( item.tipo == tipo ){
               newList.push( item );
           }
       }

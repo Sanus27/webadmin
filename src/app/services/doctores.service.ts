@@ -11,6 +11,7 @@ import { Doctores } from '../models/Doctores';
 export class DoctoresService {
 
     userscollection: AngularFirestoreCollection<Doctores>;
+    docscollection: AngularFirestoreCollection<Doctores>;
     users: Observable<Doctores[]>;
     userDoc: AngularFirestoreDocument<Doctores>;
     private resp:string
@@ -18,6 +19,7 @@ export class DoctoresService {
     constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
       this.resp = "success"
       this.userscollection = this._db.collection('usuarios');
+      this.docscollection = this._db.collection('doctores');
       this.users = this.userscollection.snapshotChanges().map(
         changes => { return changes.map( a => {
             const data = a.payload.doc.data() as Doctores;
@@ -41,7 +43,17 @@ export class DoctoresService {
         apellido: user.lastname,
         nombre: user.name,
         estado: "0",
-        tipo: "Admin"
+        tipo: "Medico"
+      })
+    }
+
+    public addDoctor(uid, user){
+      return this.docscollection.doc( uid ).set({
+        calificacion: '0',
+        cedula: user.cedula,
+        comentario: '0',
+        cv: '',
+        especialidad: user.especialidad
       })
     }
 
@@ -51,10 +63,11 @@ export class DoctoresService {
       return this._db.collection("usuarios").doc( uid ).delete()
     }
 
-    public update( id, user ) {
-      return this._db.collection("usuarios").doc( id ).update({
-        apellido: user.lastname,
-        nombre: user.name,
+    public updateDoctor( user ) {
+      let uid:string = user.id
+      return this._db.collection("usuarios").doc( uid ).update({
+        apellido: user.apellido,
+        nombre: user.nombre,
       })
     }
 

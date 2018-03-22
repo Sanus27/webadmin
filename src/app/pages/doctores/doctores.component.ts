@@ -44,7 +44,6 @@
 
                   this._user.getUsers().subscribe( (user: Doctores[]) => {
                       this.arr = user;
-                      console.log( this.arr )
                   })
 
                 }
@@ -64,7 +63,7 @@
             name: undefined,
             lastname: undefined,
             email: undefined,
-            password: 'Sanus27',
+            password: 'Sanus27'
           }
         }
         if( id == 2){
@@ -74,8 +73,9 @@
             name: user.nombre,
             lastname: user.apellido,
             email: undefined,
-            password: 'Sanus27',
+            password: 'Sanus27'
           }
+          this.uid = user;
 
         }
         this.success = ""
@@ -94,8 +94,14 @@
           let uid = data.uid
 
           this._user.addUser( uid, this.users ).then( (result) => {
-            this.result = true
-            this.success = "Se ha registrado el usuario correctamente"
+
+              this._user.addDoctor( uid, this.users ).then( (result) => {
+                this.result = true
+                this.success = "Se ha registrado el usuario correctamente"
+              }).catch( (err) => {
+                console.log("error de usuario en db: ", err)
+              })
+
           }).catch( (err) => {
             console.log("error de usuario en db: ", err)
           })
@@ -131,14 +137,13 @@
       private updateUser(){
         this.err = false
         this.result = false
-        this._user.update( this.uid, this.users ).then( (resp) => {
+        this._user.updateDoctor( this.uid ).then( (resp) => {
           this.result = true
-          this.success = "Se han hecho los cambios correctamente"
+          this.success = "Se han modificado los datos correctamente"
         }).catch( (error) => {
           this.err = true
           this.error = "Se ha producido un error, intentalo mas tarde"
         })
-
       }
 
 

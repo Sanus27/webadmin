@@ -44,7 +44,6 @@ export class UsuariosComponent implements OnInit {
 
                 this._user.getUsers().subscribe( (user: Usuarios[]) => {
                     this.arr = user;
-                    console.log( this.arr )
                 })
 
               }
