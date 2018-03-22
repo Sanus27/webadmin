@@ -15,6 +15,10 @@ declare var $:any;
 })
 export class UsuariosComponent implements OnInit {
 
+    private err:boolean;
+    private result:boolean;
+    private error:string;
+    private success:string;
     private uid:any;
     private updated:boolean;
     private arr: Usuarios[] = [];
@@ -22,6 +26,10 @@ export class UsuariosComponent implements OnInit {
 
     constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService ) {
       this.uid = this._sesion.cargarSesion();
+      this.success = ""
+      this.result = false
+      this.err = false
+      this.error = ""
     }
 
     ngOnInit() {
@@ -63,6 +71,8 @@ export class UsuariosComponent implements OnInit {
         }
 
       }
+      this.success = ""
+      this.result = false
       $('#modal').modal('show');
     }
 
@@ -72,19 +82,56 @@ export class UsuariosComponent implements OnInit {
     }
 
     private createUser(){
-      let createUsr = this._user.createUser(this.users);
+      this.err = false
+      this._user.createUser(this.users).then( (data => {
+        let uid = data.uid
+
+        this._user.addUser( uid, this.users ).then( (result) => {
+          this.result = true
+          this.success = "Se ha registrado el usuario correctamente"
+        }).catch( (err) => {
+          console.log("error de usuario en db: ", err)
+        })
+
+      })).catch( (error) => {
+        if (error.code == "auth/invalid-email") {
+          this.err = true
+          this.error = "Este no es un correo valido"
+          console.log("auth/invalid-email")
+        }
+        if (error.code == "auth/email-already-in-use") {
+          this.err = true
+          this.error = "Este correo ya tiene una cuenta"
+          console.log("auth/email-already-in-use")
+        }
+        console.log("error de autenticacion: ", error)
+      })
     }
 
     private delete(){
-      $('#eliminarUsuario').modal('hide');
-      this._user.deleteUser( this.uid );
+      this.err = false
+      this.result = false
+      this._user.deleteUser( this.uid ).then( (resp) => {
+        this.result = true
+        this.success = "Se ha eliminado con exito el usuario"
+      }).catch( (error) => {
+        this.err = true
+        this.error = "Se ha producido un error, intentalo mas tarde"
+      })
+
     }
 
     private updateUser(){
-      let name = this.users["name"];
-      let lastname = this.users["lastname"];
-      this._user.update( this.uid, name, lastname )
-      $('#modal').modal('hide');
+      this.err = false
+      this.result = false 
+      this._user.update( this.uid, this.users ).then( (resp) => {
+        this.result = true
+        this.success = "Se han hecho los cambios correctamente"
+      }).catch( (error) => {
+        this.err = true
+        this.error = "Se ha producido un error, intentalo mas tarde"
+      })
+
     }
 
 

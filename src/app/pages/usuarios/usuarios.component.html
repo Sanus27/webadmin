@@ -75,6 +75,17 @@
         <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
         <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
       </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
+
+
     </div>
   </div>
 </div>
@@ -96,6 +107,15 @@
         <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
       </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
     </div>
   </div>
 </div>
