@@ -10,8 +10,8 @@ export class FiltroPipe implements PipeTransform {
     let newList:any[] = [];
 
     if ( listas ) {
-      for( let item of listas ){
-          if( item.tipo == tipo ){
+      for ( let item of listas ) {
+          if ( item.tipo == tipo  &&  item.estado != "eliminado" ) {
               newList.push( item );
           }
       }

@@ -22,7 +22,7 @@ export class UsuariosComponent implements OnInit {
     private uid:any;
     private updated:boolean;
     private arr: Usuarios[] = [];
-    private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27' };
+    private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27', estado: '' };
 
     constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService ) {
       this.uid = this._sesion.cargarSesion();
@@ -37,9 +37,12 @@ export class UsuariosComponent implements OnInit {
       let uid = this._sesion.cargarSesion();
       if( uid){
           this._auth.showUser(uid).valueChanges().subscribe( resp =>{
+
               let dataUser = resp;
               if(dataUser["tipo"] != "Admin"){
+
                 this._router.navigate(["/login"]);
+
               } else {
 
                 this._user.getUsers().subscribe( (user: Usuarios[]) => {
@@ -47,6 +50,7 @@ export class UsuariosComponent implements OnInit {
                 })
 
               }
+
           })
       } else {
         this._router.navigate(["/login"]);
@@ -63,6 +67,7 @@ export class UsuariosComponent implements OnInit {
           name: undefined,
           lastname: undefined,
           email: undefined,
+          estado: "0",
           password: 'Sanus27',
         }
       }
@@ -73,6 +78,7 @@ export class UsuariosComponent implements OnInit {
           name: user.nombre,
           lastname: user.apellido,
           email: undefined,
+          estado: "eliminado",
           password: 'Sanus27',
         }
 

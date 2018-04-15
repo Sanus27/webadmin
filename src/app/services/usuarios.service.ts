@@ -13,7 +13,8 @@ export class UsuariosService {
     userscollection: AngularFirestoreCollection<Usuarios>;
     users: Observable<Usuarios[]>;
     userDoc: AngularFirestoreDocument<Usuarios>;
-    private resp:string
+    private resp:string;
+
     constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
       this.resp = "success"
       this.userscollection = this._db.collection('usuarios');
@@ -32,29 +33,7 @@ export class UsuariosService {
     }
 
     public createUser(user) {
-
       return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
-      // .then( (data => {
-      //     let uid = data.uid
-      //
-      //     this.userscollection.doc( uid ).set({
-      //       apellido: user.lastname,
-      //       nombre: user.name,
-      //       estado: "0",
-      //       tipo: "Admin",
-      //     }).then( (result) => {
-      //       console.log("success de usuario en db")
-      //       return result
-      //     }).catch( (err) => {
-      //       console.log("error de usuario en db")
-      //       return err
-      //     })
-      //
-      // })).catch( (error) => {
-      //   console.log("error de autenticacion:" + error)
-      //   return error
-      // })
-
     }
 
     public addUser(uid, user){
@@ -64,37 +43,23 @@ export class UsuariosService {
         estado: "0",
         tipo: "Admin"
       })
-      // .then( (result) => {
-      //   console.log("success de usuario en db")
-      //   return result
-      // }).catch( (err) => {
-      //   console.log("error de usuario en db")
-      //   return err
-      // })
     }
 
 
     public deleteUser( user ) {
-
-      let uid:string = user.id
-      return this._db.collection("usuarios").doc( uid ).delete()
-      // .then( () =>{
-      //
-      // })
-
+      let uid:string = user.id;
+      return this._db.collection("usuarios").doc( uid ).update({
+        estado: "eliminado",
+      })
+      // let uid:string = user.id
+      // return this._db.collection("usuarios").doc( uid ).delete()
     }
 
     public update( id, user ) {
-
       return this._db.collection("usuarios").doc( id ).update({
         apellido: user.lastname,
         nombre: user.name,
       })
-
-
-      //  .then( () =>{
-      //   console.log( "simon" )
-      // })
     }
 
 
