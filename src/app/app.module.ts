@@ -29,6 +29,7 @@ import { HospitalesService } from './services/hospitales.service';
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
 import { FinfotoPipe } from './pipes/finfoto.pipe';
+import { HorariosComponent } from './pages/horarios/horarios.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { FinfotoPipe } from './pipes/finfoto.pipe';
     InicioComponent,
     FiltroPipe,
     HospitalesComponent,
-    FinfotoPipe
+    FinfotoPipe,
+    HorariosComponent
   ],
   imports: [
     FormsModule,

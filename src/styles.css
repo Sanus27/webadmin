@@ -2,8 +2,32 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  background: #F5F6FA;
   overflow-x: hidden;
+}
+body{
+  background: #F5F6FA;
+}
+.video-login{
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: -1;
+}
+.login{
+  margin-top: 5%;
+  position: relative;
+}
+.login img{
+  display: block;
+  width: 100px;
+  margin-bottom: 10px;
+}
+.formLogin{
+  padding: 10px;
+  border-radius: 10px;
 }
 .card-body,
 .card-title,
@@ -59,7 +83,6 @@
   height: 100%;
 }
 .card-title{
-
   margin-top: 12px;
 }
 .card-text{
@@ -72,18 +95,6 @@ a{
 .d-inline-block,
 .nav{
   background: transparent !important;
-}
-.login{
-  margin-top: 5%;
-}
-.login img{
-  display: block;
-  width: 100px;
-  margin-bottom: 10px;
-}
-.formLogin{
-  padding: 10px;
-  border-radius: 10px;
 }
 .form-group{
   background: transparent;

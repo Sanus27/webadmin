@@ -4,6 +4,7 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { DoctoresComponent } from './pages/doctores/doctores.component';
 import { HospitalesComponent } from './pages/hospitales/hospitales.component';
+import { HorariosComponent } from './pages/horarios/horarios.component';
 
 const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
@@ -11,6 +12,7 @@ const APP_ROUTES: Routes = [
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'hospitales', component: HospitalesComponent },
   { path: 'doctores', component: DoctoresComponent },
+  { path: 'horarios', component: HorariosComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
