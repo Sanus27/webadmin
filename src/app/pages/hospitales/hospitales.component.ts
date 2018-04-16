@@ -33,27 +33,26 @@ export class HospitalesComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    let uid = this._sesion.cargarSesion();
-    if( uid){
+    let uid = this.uid;
+    if( uid ){
         this._auth.showUser(uid).valueChanges().subscribe( resp =>{
 
             let dataUser = resp;
             if(dataUser["tipo"] != "Admin"){
 
-              this._router.navigate(["/login"]);
+              this._router.navigate(["/login"])
 
             } else {
 
-              this._user.getHospitals().subscribe( (user: Hospitales[]) => {
-                  this.hospitales = user;
+              this._user.getHospitals().subscribe( (hospitales: Hospitales[]) => {
+                  this.hospitales = hospitales
               })
 
             }
 
         })
     } else {
-      this._router.navigate(["/login"]);
+      this._router.navigate(["/login"])
     }
 
   }
@@ -69,6 +68,7 @@ export class HospitalesComponent implements OnInit {
     }
     if( id == 2){
       this.updated = true;
+      this.uid = user.id;
       this.users = {
         nombre: user.nombre,
         direccion: user.direccion
