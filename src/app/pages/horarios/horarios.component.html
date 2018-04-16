@@ -18,13 +18,12 @@
       <div class="card-columns">
 
 
-        <div class="card">
+        <div class="card" *ngFor="let hos of hospitales">
             <div class="card-body">
-              <img class="card-imgs" src="./assets/img/icon-sanus.png" alt="">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link badge badge-danger" data-toggle="modal" data-target="#eliminarDoctor">Eliminar</a>
-              <a href="#" class="badge badge-success" data-toggle="modal" data-target="#crearDoctor">Actualizar</a>
+              <h5 class="card-title">{{hos.nombre}}</h5>
+              <p class="card-text">{{hos.direccion}}</p>
+              <a class="card-link badge badge-danger text-white" (click)="showDelete(hos);">Eliminar</a>
+              <a class="badge badge-success text-white" (click)="showModal(2, hos);">Actualizar</a>
             </div>
         </div>
 
@@ -33,55 +32,60 @@
 
 
 
-      <div class="agregar" data-toggle="modal" data-target="#crearDoctor">
+      <div class="agregar" (click)="showModal(1, 0);">
         <img src="./assets/img/icon-mas.png" alt="">
       </div>
 
       <!-- Modal -->
-<div class="modal fade" id="crearDoctor" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Nuevo Doctor</h5>
+        <h5 class="modal-title">
+          <div *ngIf="!updated">
+            Agregar hospital
+          </div>
+          <div *ngIf="updated">
+            Modificar hospital
+          </div>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-        <p class="modal-subtitle">La contraseña generada es: Sanus27</p>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Cedula profesional">
+          <input type="text" class="form-control" name="nombre" [(ngModel)]="users.nombre" placeholder="Nombre del hospital">
         </div>
 
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Especialidad">
+          <textarea class="form-control" name="dirreccion" rows="5" cols="100"  [(ngModel)]="users.direccion" placeholder="Dirreccion del hospital"></textarea>
         </div>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nombre">
-        </div>
-
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Apellido">
-        </div>
-
-        <div class="form-group">
-          <input type="email" class="form-control" placeholder="Correo electronico">
-        </div>
-
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Agregar doctor</button>
+        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
       </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
+
+
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="eliminarDoctor" tabindex="-1" role="dialog">
+<div class="modal fade" id="eliminarUsuario" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -91,12 +95,21 @@
         </button>
       </div>
       <div class="modal-body">
-        ¿Está seguro que desea eliminar este doctor?
+        ¿Está seguro que desea eliminar este hospital?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Si</button>
+        <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
       </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
     </div>
   </div>
 </div>
@@ -106,7 +119,6 @@
     </div><!-- CONTENIDO -->
   </div>
 </div>
-
 
 <div class="pie abajo inicio">
   <app-pie></app-pie>
