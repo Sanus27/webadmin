@@ -5,7 +5,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { HospitalesService } from '../../services/hospitales.service';
-import { Usuarios } from '../../models/Usuarios';
+import { Hospitales } from '../../models/Hospitales';
 
 declare var $:any;
 
@@ -21,8 +21,8 @@ export class HospitalesComponent implements OnInit {
   private success:string;
   private uid:any;
   private updated:boolean;
-  private arr: Usuarios[] = [];
-  private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27', estado: '' };
+  private hospitales: Hospitales[] = [];
+  private users = { nombre:'', direccion: '' };
 
   constructor( private _router:Router, private _auth:Auth_Service,  public _user:HospitalesService, private _sesion:LocalStorageService ) {
     this.uid = this._sesion.cargarSesion();
@@ -45,8 +45,8 @@ export class HospitalesComponent implements OnInit {
 
             } else {
 
-              this._user.getUsers().subscribe( (user: Usuarios[]) => {
-                  this.arr = user;
+              this._user.getHospitals().subscribe( (user: Hospitales[]) => {
+                  this.hospitales = user;
               })
 
             }
@@ -63,23 +63,15 @@ export class HospitalesComponent implements OnInit {
     if( id == 1){
       this.updated = false;
       this.users = {
-        avatar: undefined,
-        name: undefined,
-        lastname: undefined,
-        email: undefined,
-        estado: "0",
-        password: 'Sanus27',
+        nombre: undefined,
+        direccion: undefined
       }
     }
     if( id == 2){
       this.updated = true;
       this.users = {
-        avatar: undefined,
-        name: user.nombre,
-        lastname: user.apellido,
-        email: undefined,
-        estado: "eliminado",
-        password: 'Sanus27',
+        nombre: user.nombre,
+        direccion: user.direccion
       }
 
     }
@@ -94,30 +86,13 @@ export class HospitalesComponent implements OnInit {
   }
 
   private createUser(){
-    this.err = false
-    this._user.createUser(this.users).then( (data => {
-      let uid = data.uid
-
-      this._user.addUser( uid, this.users ).then( (result) => {
+      this.err = false
+      this._user.addHospital( this.users ).then( (result) => {
         this.result = true
-        this.success = "Se ha registrado el usuario correctamente"
+        this.success = "Se ha registrado el hospital correctamente"
       }).catch( (err) => {
         console.log("error de usuario en db: ", err)
       })
-
-    })).catch( (error) => {
-      if (error.code == "auth/invalid-email") {
-        this.err = true
-        this.error = "Este no es un correo valido"
-        console.log("auth/invalid-email")
-      }
-      if (error.code == "auth/email-already-in-use") {
-        this.err = true
-        this.error = "Este correo ya tiene una cuenta"
-        console.log("auth/email-already-in-use")
-      }
-      console.log("error de autenticacion: ", error)
-    })
   }
 
   private delete(){
@@ -130,7 +105,6 @@ export class HospitalesComponent implements OnInit {
       this.err = true
       this.error = "Se ha producido un error, intentalo mas tarde"
     })
-
   }
 
   private updateUser(){

@@ -18,12 +18,12 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let user of arr | filtro: 'Admin' ">
+        <div class="card" *ngFor="let hos of hospitales">
             <div class="card-body">
-              <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
-              <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
-              <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
-              <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
+              <h5 class="card-title">{{hos.nombre}}</h5>
+              <p class="card-text">{{hos.direccion}}</p>
+              <a class="card-link badge badge-danger text-white" (click)="showDelete(hos);">Eliminar</a>
+              <a class="badge badge-success text-white" (click)="showModal(2, hos);">Actualizar</a>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
         </div>
 
         <div class="form-group">
-          <textarea class="form-control" name="dirreccion" rows="5" cols="100"  [(ngModel)]="users.dirreccion" placeholder="Dirreccion del hospital"></textarea>
+          <textarea class="form-control" name="dirreccion" rows="5" cols="100"  [(ngModel)]="users.direccion" placeholder="Dirreccion del hospital"></textarea>
         </div>
 
       </div>
@@ -95,7 +95,7 @@
         </button>
       </div>
       <div class="modal-body">
-        ¿Está seguro que desea eliminar este administrador?
+        ¿Está seguro que desea eliminar este hospital?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
