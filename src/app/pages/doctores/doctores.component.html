@@ -94,7 +94,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
-        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
       </div>
 
       <div *ngIf="result" class="alert alert-success" role="alert">
