@@ -4,72 +4,77 @@ import { AngularFirestore,  AngularFirestoreCollection, AngularFirestoreDocument
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { Usuarios } from '../models/Usuarios';
 import { Doctores } from '../models/Doctores';
-
 
 @Injectable()
 export class DoctoresService {
 
-    userscollection: AngularFirestoreCollection<Doctores>;
-    docscollection: AngularFirestoreCollection<Doctores>;
-    users: Observable<Doctores[]>;
-    userDoc: AngularFirestoreDocument<Doctores>;
-    private resp:string
+  userscollection: AngularFirestoreCollection<Usuarios>;
+  doctorcollection: AngularFirestoreCollection<Doctores>;
+  users: Observable<Usuarios[]>;
+  userDoc: AngularFirestoreDocument<Usuarios>;
+  private resp:string;
 
-    constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
-      this.resp = "success"
-      this.userscollection = this._db.collection('usuarios');
-      this.docscollection = this._db.collection('doctores');
-      this.users = this.userscollection.snapshotChanges().map(
-        changes => { return changes.map( a => {
-            const data = a.payload.doc.data() as Doctores;
-            data.id = a.payload.doc.id;
-            return data;
-        });
+  constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
+    this.resp = "success"
+    this.userscollection = this._db.collection('usuarios');
+    this.doctorcollection = this._db.collection('doctores');
+    this.users = this.userscollection.snapshotChanges().map(
+      changes => { return changes.map( a => {
+          const data = a.payload.doc.data() as Usuarios;
+          data.id = a.payload.doc.id;
+          return data;
       });
+    });
 
-    }
+  }
 
-    public getUsers() {
-      return this.users;
-    }
+  public getUsers() {
+    return this.users;
+  }
 
-    public createUser(user) {
-      return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
-    }
+  public createUser(user) {
+    return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
+  }
 
-    public addUser(uid, user){
-      return this.userscollection.doc( uid ).set({
-        apellido: user.lastname,
-        nombre: user.name,
-        estado: "0",
-        tipo: "Medico"
-      })
-    }
+  public addUser(uid, user){
+    return this.userscollection.doc( uid ).set({
+      avatar: "userDefaults.png",
+      apellido: user.lastname,
+      nombre: user.name,
+      estado: "0",
+      tipo: "Medico"
+    })
+  }
 
-    public addDoctor(uid, user){
-      return this.docscollection.doc( uid ).set({
-        calificacion: '0',
-        cedula: user.cedula,
-        comentario: '0',
-        cv: '',
-        especialidad: user.especialidad
-      })
-    }
+  public addDoctor(uid, doctor){
+    return this.doctorcollection.doc( uid ).set({
+      calificacion: "0",
+      cedula: doctor.cedula,
+      comentario: "0",
+      especialidad: doctor.especialidad,
+      cv: "",
+      hospital: doctor.hospital
+    })
+  }
 
 
-    public deleteUser( user ) {
-      let uid:string = user.id
-      return this._db.collection("usuarios").doc( uid ).delete()
-    }
+  public deleteUser( user ) {
+    let uid:string = user.id;
+    return this._db.collection("usuarios").doc( uid ).update({
+      estado: "eliminado",
+    })
+  }
 
-    public updateDoctor( user ) {
-      let uid:string = user.id
-      return this._db.collection("usuarios").doc( uid ).update({
-        apellido: user.apellido,
-        nombre: user.nombre,
-      })
-    }
+  public update( id, user ) {
+    return this._db.collection("usuarios").doc( id ).update({
+      apellido: user.lastname,
+      nombre: user.name,
+    })
+  }
+
+  
 
 
 }

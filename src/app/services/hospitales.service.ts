@@ -4,23 +4,23 @@ import { AngularFirestore,  AngularFirestoreCollection, AngularFirestoreDocument
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { Usuarios } from '../models/Usuarios';
+import { Hospitales } from '../models/Hospitales';
 
 
 @Injectable()
 export class HospitalesService {
 
-    userscollection: AngularFirestoreCollection<Usuarios>;
-    users: Observable<Usuarios[]>;
-    userDoc: AngularFirestoreDocument<Usuarios>;
+    hospitalesscollection: AngularFirestoreCollection<Hospitales>;
+    hospitales: Observable<Hospitales[]>;
+    userDoc: AngularFirestoreDocument<Hospitales>;
     private resp:string
 
     constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
       this.resp = "success"
-      this.userscollection = this._db.collection('usuarios');
-      this.users = this.userscollection.snapshotChanges().map(
+      this.hospitalesscollection = this._db.collection('hospitales');
+      this.hospitales = this.hospitalesscollection.snapshotChanges().map(
         changes => { return changes.map( a => {
-            const data = a.payload.doc.data() as Usuarios;
+            const data = a.payload.doc.data() as Hospitales;
             data.id = a.payload.doc.id;
             return data;
         });
@@ -28,35 +28,11 @@ export class HospitalesService {
 
     }
 
-    public getUsers() {
-      return this.users;
+    public getHospitals() {
+      return this.hospitales;
     }
 
-    public createUser(user) {
-      return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
-    }
-
-    public addUser(uid, user){
-      return this.userscollection.doc( uid ).set({
-        apellido: user.lastname,
-        nombre: user.name,
-        estado: "0",
-        tipo: "Admin"
-      })
-    }
-
-
-    public deleteUser( user ) {
-      let uid:string = user.id
-      return this._db.collection("usuarios").doc( uid ).delete()
-    }
-
-    public update( id, user ) {
-      return this._db.collection("usuarios").doc( id ).update({
-        apellido: user.lastname,
-        nombre: user.name,
-      })
-    }
+    
 
 
 }

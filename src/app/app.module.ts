@@ -26,10 +26,12 @@ import { LocalStorageService } from './services/localstorage.service';
 import { UsuariosService } from './services/usuarios.service';
 import { DoctoresService } from './services/doctores.service';
 import { HospitalesService } from './services/hospitales.service';
+import { EspecialidadesService } from './services/especialidades.service';
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
 import { FinfotoPipe } from './pipes/finfoto.pipe';
 import { HorariosComponent } from './pages/horarios/horarios.component';
+import { EspecialidadesComponent } from './pages/especialidades/especialidades.component';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { HorariosComponent } from './pages/horarios/horarios.component';
     FiltroPipe,
     HospitalesComponent,
     FinfotoPipe,
-    HorariosComponent
+    HorariosComponent,
+    EspecialidadesComponent
   ],
   imports: [
     FormsModule,
@@ -61,7 +64,8 @@ import { HorariosComponent } from './pages/horarios/horarios.component';
     UsuariosService,
     DoctoresService,
     HospitalesService,
-    LocalStorageService
+    LocalStorageService,
+    EspecialidadesService
   ],
   bootstrap: [AppComponent]
 })
