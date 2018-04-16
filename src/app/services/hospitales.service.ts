@@ -32,7 +32,37 @@ export class HospitalesService {
       return this.hospitales;
     }
 
-    
+
+    public createUser(user) {
+      return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
+    }
+
+    public addUser(uid, user){
+      return this.hospitalesscollection.doc( uid ).set({
+        apellido: user.lastname,
+        nombre: user.name,
+        estado: "0",
+        tipo: "Admin"
+      })
+    }
+
+
+    public deleteUser( user ) {
+      let uid:string = user.id;
+      return this._db.collection("usuarios").doc( uid ).update({
+        estado: "eliminado",
+      })
+      // let uid:string = user.id
+      // return this._db.collection("usuarios").doc( uid ).delete()
+    }
+
+    public update( id, user ) {
+      return this._db.collection("usuarios").doc( id ).update({
+        apellido: user.lastname,
+        nombre: user.name,
+      })
+    }
+
 
 
 }

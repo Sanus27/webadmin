@@ -18,7 +18,12 @@ body{
 }
 .login{
   margin-top: 5%;
+  display: block;
   position: relative;
+}
+.login-width{
+  display: block;
+  width: 270px !important;
 }
 .login img{
   display: block;
