@@ -60,17 +60,83 @@
 
         <div class="row" *ngIf="!next">
 
-            <div class="col-6" *ngFor="let dia of dias">
+                      <div class="col-6">
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
-                <label class="form-check-label" for="dia">
-                  {{dia}}
-                </label>
-              </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="Lunes" [(ngModel)]="users.Lunes">
+                          <label class="form-check-label" for="Lunes">
+                            Lunes
+                          </label>
+                        </div>
 
-            </div>
+                     </div>
 
+                     <div class="col-6">
+
+                       <div class="form-check">
+                         <input class="form-check-input" type="checkbox" id="Martes" [(ngModel)]="users.Martes">
+                         <label class="form-check-label" for="Martes">
+                           Martes
+                         </label>
+                       </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="Miercoles" [(ngModel)]="users.Miercoles">
+                        <label class="form-check-label" for="Miercoles">
+                          Miércoles
+                        </label>
+                      </div>
+
+                   </div>
+
+                   <div class="col-6">
+
+                     <div class="form-check">
+                       <input class="form-check-input" type="checkbox" id="Jueves" [(ngModel)]="users.Jueves">
+                       <label class="form-check-label" for="Jueves">
+                         Jueves
+                       </label>
+                     </div>
+
+                  </div>
+
+                  <div class="col-6">
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="Viernes" [(ngModel)]="users.Viernes">
+                      <label class="form-check-label" for="Viernes">
+                        Viernes
+                      </label>
+                    </div>
+
+                 </div>
+
+                 <div class="col-6">
+
+                   <div class="form-check">
+                     <input class="form-check-input" type="checkbox" id="Sabado" [(ngModel)]="users.Sabado">
+                     <label class="form-check-label" for="Sabado">
+                       Sábado
+                     </label>
+                   </div>
+
+                </div>
+
+
+                <div class="col-6">
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="Domingo" [(ngModel)]="users.Domingo">
+                    <label class="form-check-label" for="Domingo">
+                      Domingo
+                    </label>
+                  </div>
+
+               </div>
 
         </div>
 
@@ -84,38 +150,144 @@
                 <option *ngFor="let dia of dias" [value]="users.name">
                    {{dia}}
                 </option>
-                <!-- <option *ngFor="let especialidad of especialidades" [value]="users.name">
-                   {{especialidad.nombre}}
-                </option> -->
               </select>
             </div>
 
           </div>
 
 
-          <div class="col-6" *ngFor="let hora of am">
-            
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
-              <label class="form-check-label" for="hora">
-                {{hora}}
-              </label>
-            </div>
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora1" [(ngModel)]="hours.hora1">
+                <label class="form-check-label" for="hora1">
+                  6:00 am - 7:00 am
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora2" [(ngModel)]="hours.hora2">
+                <label class="form-check-label" for="hora2">
+                  7:00 am - 8:00 am
+                </label>
+              </div>
+
+          </div>
+
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora3" [(ngModel)]="hours.hora3">
+                <label class="form-check-label" for="hora3">
+                  8:00 am - 9:00 am
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora4" [(ngModel)]="hours.hora4">
+                <label class="form-check-label" for="hora4">
+                  9:00 am - 10:00 am
+                </label>
+              </div>
+
+          </div>
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora5" [(ngModel)]="hours.hora5">
+                <label class="form-check-label" for="hora5">
+                  10:00 am - 11:00 am
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora6" [(ngModel)]="hours.hora6">
+                <label class="form-check-label" for="hora6">
+                  11:00 am - 12:00 pm
+                </label>
+              </div>
+
+          </div>
+
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora7" [(ngModel)]="hours.hora7">
+                <label class="form-check-label" for="hora7">
+                  12:00 pm - 1:00 pm
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora8" [(ngModel)]="hours.hora8">
+                <label class="form-check-label" for="hora8">
+                  1:00 pm - 2:00 pm
+                </label>
+              </div>
+
+          </div>
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora9" [(ngModel)]="hours.hora9">
+                <label class="form-check-label" for="hora9">
+                  2:00 pm - 3:00 pm
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora10" [(ngModel)]="hours.hora10">
+                <label class="form-check-label" for="hora10">
+                  3:00 pm - 4:00 pm
+                </label>
+              </div>
+
+          </div>
+
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora11" [(ngModel)]="hours.hora11">
+                <label class="form-check-label" for="hora11">
+                  4:00 pm - 5:00 pm
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora12" [(ngModel)]="hours.hora12">
+                <label class="form-check-label" for="hora12">
+                  5:00 pm - 6:00 pm
+                </label>
+              </div>
+
+          </div>
+
+          <div class="col-6">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora13" [(ngModel)]="hours.hora13">
+                <label class="form-check-label" for="hora13">
+                  6:00 pm - 7:00 pm
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hora14" [(ngModel)]="hours.hora14">
+                <label class="form-check-label" for="hora14">
+                  7:00 pm - 8:00 pm
+                </label>
+              </div>
 
           </div>
 
 
 
-          <div class="col-6" *ngFor="let hora of pm">
 
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
-              <label class="form-check-label" for="hora">
-                {{hora}}
-              </label>
-            </div>
-
-          </div>
 
         </div>
 
