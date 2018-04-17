@@ -18,12 +18,12 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let hos of hospitales">
+        <div class="card" *ngFor="let user of arr | filtro: 'Medico' ">
             <div class="card-body">
-              <h5 class="card-title">{{hos.nombre}}</h5>
-              <p class="card-text">{{hos.direccion}}</p>
-              <a class="card-link badge badge-danger text-white" (click)="showDelete(hos);">Eliminar</a>
-              <a class="badge badge-success text-white" (click)="showModal(2, hos);">Actualizar</a>
+              <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
+              <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
+              <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
+              <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
             </div>
         </div>
 
@@ -38,15 +38,15 @@
 
       <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
           <div *ngIf="!updated">
-            Agregar hospital
+            Agregar horario
           </div>
           <div *ngIf="updated">
-            Modificar hospital
+            Modificar horario
           </div>
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -55,19 +55,82 @@
       </div>
       <div class="modal-body">
 
-        <div class="form-group">
-          <input type="text" class="form-control" name="nombre" [(ngModel)]="users.nombre" placeholder="Nombre del hospital">
+        <p class="modal-subtitle" *ngIf="!next">Seleciona que dias dará consulta</p>
+        <p class="modal-subtitle" *ngIf="next">Coloca el horario de cada día</p>
+
+        <div class="row" *ngIf="!next">
+
+            <div class="col-6" *ngFor="let dia of dias">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
+                <label class="form-check-label" for="dia">
+                  {{dia}}
+                </label>
+              </div>
+
+            </div>
+
+
         </div>
 
-        <div class="form-group">
-          <textarea class="form-control" name="dirreccion" rows="5" cols="100"  [(ngModel)]="users.direccion" placeholder="Dirreccion del hospital"></textarea>
+        <div class="row" *ngIf="next">
+
+          <div class="col-12">
+
+            <div class="form-group" *ngIf="!updated">
+              <select class="form-control">
+                <option>Seleciona las horas de cada día</option>
+                <option *ngFor="let dia of dias" [value]="users.name">
+                   {{dia}}
+                </option>
+                <!-- <option *ngFor="let especialidad of especialidades" [value]="users.name">
+                   {{especialidad.nombre}}
+                </option> -->
+              </select>
+            </div>
+
+          </div>
+
+
+          <div class="col-6" *ngFor="let hora of am">
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
+              <label class="form-check-label" for="hora">
+                {{hora}}
+              </label>
+            </div>
+
+          </div>
+
+
+
+          <div class="col-6" *ngFor="let hora of pm">
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="users.name">
+              <label class="form-check-label" for="hora">
+                {{hora}}
+              </label>
+            </div>
+
+          </div>
+
         </div>
+
 
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="!next">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
-        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
+        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="nextView();">Siguiente</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
+      </div>
+
+      <div class="modal-footer" *ngIf="next">
+        <button type="button" class="btn btn-secondary" (click)="preView();">Regresar</button>
+        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Guardar</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
       </div>
 
       <div *ngIf="result" class="alert alert-success" role="alert">
@@ -95,7 +158,7 @@
         </button>
       </div>
       <div class="modal-body">
-        ¿Está seguro que desea eliminar este hospital?
+        ¿Está seguro que desea eliminar este horario?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
