@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { HospitalesService } from '../../services/hospitales.service';
@@ -21,10 +21,13 @@ export class HospitalesComponent implements OnInit {
   private success:string;
   private uid:any;
   private updated:boolean;
-  private hospitales: Hospitales[] = [];
+  private hospitales: any;
   private users = { nombre:'', direccion: '' };
 
-  constructor( private _router:Router, private _auth:Auth_Service,  public _user:HospitalesService, private _sesion:LocalStorageService ) {
+  userscollection: AngularFirestoreCollection<Hospitales>;
+  userss: Observable<Hospitales[]>;
+
+  constructor( private _router:Router, private _auth:Auth_Service,  public _user:HospitalesService, private _sesion:LocalStorageService, public _db: AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
     this.success = ""
     this.result = false
@@ -44,9 +47,15 @@ export class HospitalesComponent implements OnInit {
 
             } else {
 
-              this._user.getHospitals().subscribe( (hospitales: Hospitales[]) => {
-                  this.hospitales = hospitales
-              })
+              this.userscollection = this._db.collection('hospitales');
+              this.hospitales = this.userscollection.snapshotChanges().map(
+                changes => { return changes.map( a => {
+                    const data = a.payload.doc.data() as Hospitales;
+                    data.id = a.payload.doc.id;
+                    return data;
+                });
+              });
+
 
             }
 

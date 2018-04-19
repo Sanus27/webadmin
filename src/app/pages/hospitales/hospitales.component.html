@@ -18,14 +18,18 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let hos of hospitales | filtro: 'Medico'  async">
-            <div class="card-body">
-              <h5 class="card-title">{{hos.nombre}}</h5>
-              <p class="card-text">{{hos.direccion}}</p>
-              <a class="card-link badge badge-danger text-white" (click)="showDelete(hos);">Eliminar</a>
-              <a class="badge badge-success text-white" (click)="showModal(2, hos);">Actualizar</a>
+        <div *ngFor="let hos of hospitales | async">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{hos.nombre}}</h5>
+                <p class="card-text">{{hos.direccion}}</p>
+                <a class="card-link badge badge-danger text-white" (click)="showDelete(hos);">Eliminar</a>
+                <a class="badge badge-success text-white" (click)="showModal(2, hos);">Actualizar</a>
+              </div>
             </div>
         </div>
+
+
 
 
       </div>

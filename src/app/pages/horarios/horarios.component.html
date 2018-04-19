@@ -17,19 +17,21 @@
 
       <div class="card-columns">
 
-
-        <div class="card" *ngFor="let user of arr | filtro: 'Medico' async">
-            <div class="card-body">
-              <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
-              <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
-              <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
-              <a class="badge badge-success text-white" (click)="showModal(2,user);">Actualizar</a>
-              <a class="card-link badge badge-primary text-white" (click)="showModal(1,user);">Agregar</a>
-            </div>
+        <div *ngFor="let user of arr | async">
+          <div class="card" *ngIf="user.tipo == 'Medico' ">
+              <div class="card-body">
+                <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
+                <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
+                <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
+                <a class="badge badge-success text-white" (click)="showModal(2,user);">Actualizar</a>
+                <a class="card-link badge badge-primary text-white" (click)="showModal(1,user);">Agregar</a>
+              </div>
+          </div>
         </div>
 
 
       </div>
+
 
 
 

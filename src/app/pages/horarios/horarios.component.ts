@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { DoctoresService } from '../../services/doctores.service';
@@ -24,14 +24,18 @@ export class HorariosComponent implements OnInit {
   private uid:any;
   private updated:boolean;
   private next:boolean;
-  private arr: Usuarios[] = [];
+  private arr: any;
   private schedules: any[] = [];
   private dias = []
   private days = { Lunes: '', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: ''}
   private hours = { hora1: '', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '' , hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' }
   private doctors = { cedula:'', especialidad: '', hospital: '' }
   private daysArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
-  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hour:HorariosService ) {
+
+  userscollection: AngularFirestoreCollection<Usuarios>;
+  userss: Observable<Usuarios[]>;
+
+  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hour:HorariosService, public _db: AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
     this.success = ""
     this.result = false
@@ -53,9 +57,15 @@ export class HorariosComponent implements OnInit {
 
             } else {
 
-              this._user.getUsers().subscribe( (doctores: Usuarios[]) => {
-                  this.arr = doctores;
-              })
+
+              this.userscollection = this._db.collection('usuarios');
+              this.arr = this.userscollection.snapshotChanges().map(
+                changes => { return changes.map( a => {
+                    const data = a.payload.doc.data() as Usuarios;
+                    data.id = a.payload.doc.id;
+                    return data;
+                });
+              });
 
             }
 
