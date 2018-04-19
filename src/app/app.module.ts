@@ -27,6 +27,7 @@ import { UsuariosService } from './services/usuarios.service';
 import { DoctoresService } from './services/doctores.service';
 import { HospitalesService } from './services/hospitales.service';
 import { EspecialidadesService } from './services/especialidades.service';
+import { HorariosService } from './services/horarios.service';
 //PIPES
 import { FiltroPipe } from './pipes/filtro.pipe';
 import { FinfotoPipe } from './pipes/finfoto.pipe';
@@ -61,6 +62,7 @@ import { EspecialidadesComponent } from './pages/especialidades/especialidades.c
   ],
   providers: [
     Auth_Service,
+    HorariosService,
     UsuariosService,
     DoctoresService,
     HospitalesService,

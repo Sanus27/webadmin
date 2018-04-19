@@ -23,7 +23,8 @@
               <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
               <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
               <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
-              <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
+              <a class="badge badge-success text-white" (click)="showModal(2,user);">Actualizar</a>
+              <a class="card-link badge badge-primary text-white" (click)="showModal(1,user);">Agregar</a>
             </div>
         </div>
 
@@ -32,9 +33,6 @@
 
 
 
-      <div class="agregar" (click)="showModal(1, 0);">
-        <img src="./assets/img/icon-mas.png" alt="">
-      </div>
 
       <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
@@ -63,7 +61,7 @@
                       <div class="col-6">
 
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="Lunes" [(ngModel)]="users.Lunes">
+                          <input class="form-check-input" type="checkbox" id="Lunes" [(ngModel)]="days.Lunes">
                           <label class="form-check-label" for="Lunes">
                             Lunes
                           </label>
@@ -74,7 +72,7 @@
                      <div class="col-6">
 
                        <div class="form-check">
-                         <input class="form-check-input" type="checkbox" id="Martes" [(ngModel)]="users.Martes">
+                         <input class="form-check-input" type="checkbox" id="Martes" [(ngModel)]="days.Martes">
                          <label class="form-check-label" for="Martes">
                            Martes
                          </label>
@@ -85,7 +83,7 @@
                     <div class="col-6">
 
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="Miercoles" [(ngModel)]="users.Miercoles">
+                        <input class="form-check-input" type="checkbox" id="Miercoles" [(ngModel)]="days.Miercoles">
                         <label class="form-check-label" for="Miercoles">
                           Miércoles
                         </label>
@@ -96,7 +94,7 @@
                    <div class="col-6">
 
                      <div class="form-check">
-                       <input class="form-check-input" type="checkbox" id="Jueves" [(ngModel)]="users.Jueves">
+                       <input class="form-check-input" type="checkbox" id="Jueves" [(ngModel)]="days.Jueves">
                        <label class="form-check-label" for="Jueves">
                          Jueves
                        </label>
@@ -107,7 +105,7 @@
                   <div class="col-6">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="Viernes" [(ngModel)]="users.Viernes">
+                      <input class="form-check-input" type="checkbox" id="Viernes" [(ngModel)]="days.Viernes">
                       <label class="form-check-label" for="Viernes">
                         Viernes
                       </label>
@@ -118,7 +116,7 @@
                  <div class="col-6">
 
                    <div class="form-check">
-                     <input class="form-check-input" type="checkbox" id="Sabado" [(ngModel)]="users.Sabado">
+                     <input class="form-check-input" type="checkbox" id="Sabado" [(ngModel)]="days.Sabado">
                      <label class="form-check-label" for="Sabado">
                        Sábado
                      </label>
@@ -130,7 +128,7 @@
                 <div class="col-6">
 
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="Domingo" [(ngModel)]="users.Domingo">
+                    <input class="form-check-input" type="checkbox" id="Domingo" [(ngModel)]="days.Domingo">
                     <label class="form-check-label" for="Domingo">
                       Domingo
                     </label>
@@ -147,7 +145,7 @@
             <div class="form-group" *ngIf="!updated">
               <select class="form-control">
                 <option>Seleciona las horas de cada día</option>
-                <option *ngFor="let dia of dias" [value]="users.name">
+                <option *ngFor="let dia of dias" [value]="dia">
                    {{dia}}
                 </option>
               </select>

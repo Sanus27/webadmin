@@ -10,17 +10,15 @@ import { Doctores } from '../models/Doctores';
 @Injectable()
 export class HorariosService {
 
-  userscollection: AngularFirestoreCollection<Usuarios>;
-  doctorcollection: AngularFirestoreCollection<Doctores>;
+  horarioscollection: AngularFirestoreCollection<Usuarios>;
   users: Observable<Usuarios[]>;
   userDoc: AngularFirestoreDocument<Usuarios>;
   private resp:string;
 
   constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
     this.resp = "success"
-    this.userscollection = this._db.collection('usuarios');
-    this.doctorcollection = this._db.collection('doctores');
-    this.users = this.userscollection.snapshotChanges().map(
+    this.horarioscollection = this._db.collection('horarios');
+    this.users = this.horarioscollection.snapshotChanges().map(
       changes => { return changes.map( a => {
           const data = a.payload.doc.data() as Usuarios;
           data.id = a.payload.doc.id;
@@ -30,16 +28,13 @@ export class HorariosService {
 
   }
 
-  public getUsers() {
-    return this.users;
+  public getHours( uid ) {
+    return this.users
   }
 
-  public createUser(user) {
-    return this._auth.auth.createUserWithEmailAndPassword( user.email, user.password);
-  }
-
-  public addUser(uid, user){
-    return this.userscollection.doc( uid ).set({
+  public addHour(user){
+    let uid:string = user.id;
+    return this.horarioscollection.doc( uid ).set({
       avatar: "userDefaults.png",
       apellido: user.lastname,
       nombre: user.name,
@@ -48,27 +43,13 @@ export class HorariosService {
     })
   }
 
-  public addDoctor(uid, doctor){
-    return this.doctorcollection.doc( uid ).set({
-      calificacion: "0",
-      cedula: doctor.cedula,
-      comentario: "0",
-      especialidad: doctor.especialidad,
-      cv: "",
-      hospital: doctor.hospital
-    })
-  }
-
-
-  public deleteUser( user ) {
+  public deleteHour( user ) {
     let uid:string = user.id;
-    return this._db.collection("usuarios").doc( uid ).update({
-      estado: "eliminado",
-    })
+    return this.horarioscollection.doc( uid ).delete()
   }
 
-  public update( id, user ) {
-    return this._db.collection("usuarios").doc( id ).update({
+  public updateHour( id, user ) {
+    return this.horarioscollection.doc( id ).update({
       apellido: user.lastname,
       nombre: user.name,
     })
