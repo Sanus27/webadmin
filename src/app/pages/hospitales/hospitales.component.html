@@ -18,7 +18,7 @@
       <div class="card-columns">
 
 
-        <div class="card" *ngFor="let hos of hospitales">
+        <div class="card" *ngFor="let hos of hospitales | filtro: 'Medico'  async">
             <div class="card-body">
               <h5 class="card-title">{{hos.nombre}}</h5>
               <p class="card-text">{{hos.direccion}}</p>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { AngularFirestore,  AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -12,7 +11,6 @@ export class UsuariosService {
 
     userscollection: AngularFirestoreCollection<Usuarios>;
     users: Observable<Usuarios[]>;
-    userDoc: AngularFirestoreDocument<Usuarios>;
     private resp:string;
 
     constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
@@ -51,8 +49,6 @@ export class UsuariosService {
       return this._db.collection("usuarios").doc( uid ).update({
         estado: "eliminado",
       })
-      // let uid:string = user.id
-      // return this._db.collection("usuarios").doc( uid ).delete()
     }
 
     public update( id, user ) {

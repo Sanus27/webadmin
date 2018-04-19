@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { DoctoresService } from '../../services/doctores.service';
@@ -27,13 +27,16 @@ export class DoctoresComponent implements OnInit {
   private success:string;
   private uid:any;
   private updated:boolean;
-  private arr: Usuarios[] = [];
+  private arr: any;
   private hospitales: Hospitales[] = [];
   private especialidades: Especialidades[] = [];
   private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27', estado: '' };
   private doctors = { cedula:'', especialidad: '', hospital: '' };
 
-  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hospi:HospitalesService, private _espec:EspecialidadesService ) {
+  userscollection: AngularFirestoreCollection<Usuarios>;
+  userss: Observable<Usuarios[]>;
+
+  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hospi:HospitalesService, private _espec:EspecialidadesService, public _db: AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
     this.success = ""
     this.result = false
@@ -54,9 +57,16 @@ export class DoctoresComponent implements OnInit {
 
             } else {
 
-              this._user.getUsers().subscribe( (user: Usuarios[]) => {
-                  this.arr = user;
-              })
+              this.userscollection = this._db.collection('usuarios');
+              this.arr = this.userscollection.snapshotChanges().map(
+                changes => { return changes.map( a => {
+                    const data = a.payload.doc.data() as Usuarios;
+                    data.id = a.payload.doc.id;
+                    return data;
+                });
+              });
+
+              console.log( this.arr )
 
               this._hospi.getHospitals().subscribe( (hospitales: Especialidades[]) => {
                   this.hospitales = hospitales;

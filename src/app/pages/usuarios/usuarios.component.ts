@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Auth_Service } from '../../services/auth_service';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { UsuariosService } from '../../services/usuarios.service';
@@ -21,10 +21,13 @@ export class UsuariosComponent implements OnInit {
     private success:string;
     private uid:any;
     private updated:boolean;
-    private arr: Usuarios[] = [];
+    private arr: any;
     private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27', estado: '' };
 
-    constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService ) {
+userscollection: AngularFirestoreCollection<Usuarios>;
+userss: Observable<Usuarios[]>;
+
+    constructor( private _router:Router, private _auth:Auth_Service,  public _user: UsuariosService, private _sesion:LocalStorageService, public _db: AngularFirestore ) {
       this.uid = this._sesion.cargarSesion();
       this.success = ""
       this.result = false
@@ -45,9 +48,16 @@ export class UsuariosComponent implements OnInit {
 
               } else {
 
-                this._user.getUsers().subscribe( (user: Usuarios[]) => {
-                    this.arr = user;
-                })
+                this.userscollection = this._db.collection('usuarios');
+                this.arr = this.userscollection.snapshotChanges().map(
+                  changes => { return changes.map( a => {
+                      const data = a.payload.doc.data() as Usuarios;
+                      data.id = a.payload.doc.id;
+                      return data;
+                  });
+                });
+
+        
 
               }
 
