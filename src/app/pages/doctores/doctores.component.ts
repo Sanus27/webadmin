@@ -33,8 +33,13 @@ export class DoctoresComponent implements OnInit {
   private users = { avatar:'', lastname: '', name: '', email: '', password: 'Sanus27', estado: '' };
   private doctors = { cedula:'', especialidad: '', hospital: '' };
 
-  userscollection: AngularFirestoreCollection<Usuarios>;
-  userss: Observable<Usuarios[]>;
+  private userscollection: AngularFirestoreCollection<Usuarios>;
+  private doctorcollection: AngularFirestoreCollection<Usuarios>;
+  private userss: Observable<Usuarios[]>;
+  private cedula:string = undefined;
+  private especialidad:string = undefined;
+  private hospital:string = undefined;
+  private conta = 0;
 
   constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hospi:HospitalesService, private _espec:EspecialidadesService, public _db: AngularFirestore ) {
     this.uid = this._sesion.cargarSesion();
@@ -66,7 +71,6 @@ export class DoctoresComponent implements OnInit {
                 });
               });
 
-              console.log( this.arr )
 
               this._hospi.getHospitals().subscribe( (hospitales: Especialidades[]) => {
                   this.hospitales = hospitales;
@@ -88,33 +92,71 @@ export class DoctoresComponent implements OnInit {
 
   private showModal( id, user ){
     if( id == 1){
-      this.updated = false;
-      this.users = {
-        avatar: undefined,
-        name: undefined,
-        lastname: undefined,
-        email: undefined,
-        estado: "0",
-        password: 'Sanus27',
-      }
+      this.newDoctor()
     }
     if( id == 2){
-      this.updated = true;
-      this.uid = user.id;
-      this.users = {
-        avatar: undefined,
-        name: user.nombre,
-        lastname: user.apellido,
-        email: undefined,
-        estado: "0",
-        password: 'Sanus27',
-      }
-
+      this.editDoctor(user);
     }
     this.success = ""
     this.result = false
-    $('#modal').modal('show');
   }
+
+  private newDoctor(){
+      this.updated = false;
+      this.users = {
+          avatar: undefined,
+          name: undefined,
+          lastname: undefined,
+          email: undefined,
+          estado: "0",
+          password: 'Sanus27',
+      }
+      this.doctors = {
+          cedula: undefined,
+          especialidad: 'Selecciona tu especialidad',
+          hospital: 'Selecciona tu hospital'
+      }
+      $('#modal').modal('show');
+  }
+
+  private editDoctor( user ){
+    this.cedula = undefined;
+    this.especialidad = undefined;
+    this.hospital = undefined;
+    this.updated = true;
+    this.uid = user.id;
+    this.users = {
+      avatar: undefined,
+      name: user.nombre,
+      lastname: user.apellido,
+      email: undefined,
+      estado: "0",
+      password: 'Sanus27',
+    }
+
+    this._user.getUsers( this.uid ).subscribe( data => {
+        this.cedula = this._user.cedula
+        this.especialidad = this._user.especialidad
+        this.hospital = this._user.hospital
+
+        this.doctors = {
+          cedula: this.cedula,
+          especialidad: this.especialidad,
+          hospital: this.hospital
+        }
+
+        if ( this.cedula != undefined ) {
+          $('#modal').modal('show');
+        }
+
+
+    })
+
+
+
+
+  }
+
 
   private showDelete( user ){
     this.uid = user;

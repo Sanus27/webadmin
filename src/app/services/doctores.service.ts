@@ -10,28 +10,47 @@ import { Doctores } from '../models/Doctores';
 @Injectable()
 export class DoctoresService {
 
-  userscollection: AngularFirestoreCollection<Usuarios>;
-  doctorcollection: AngularFirestoreCollection<Doctores>;
-  users: Observable<Usuarios[]>;
-  userDoc: AngularFirestoreDocument<Usuarios>;
+  private userscollection: AngularFirestoreCollection<Usuarios>;
+  private doctorcollection: AngularFirestoreCollection<Doctores>;
+  private users:any;
+  private userDoc: AngularFirestoreDocument<Usuarios>;
   private resp:string;
+  public cedula:string = undefined
+  public especialidad:string = undefined
+  public hospital:string = undefined
 
   constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
     this.resp = "success"
     this.userscollection = this._db.collection('usuarios');
     this.doctorcollection = this._db.collection('doctores');
-    this.users = this.userscollection.snapshotChanges().map(
-      changes => { return changes.map( a => {
-          const data = a.payload.doc.data() as Usuarios;
-          data.id = a.payload.doc.id;
-          return data;
-      });
-    });
+  }
+
+  public getUsers( uid ) {
+
+
+    return this.getDoctorById( uid ).map( data => {
+        for( var i = 0; i <= data.length - 1; i ++ ){
+            if ( data[i] != undefined ){
+                this.cedula = data[i]["cedula"]
+                this.especialidad = data[i]["especialidad"]
+                this.hospital = data[i]["hospital"]
+            }
+        }
+    })
+
 
   }
 
-  public getUsers() {
-    return this.users;
+  public getDoctorById( uid ){
+    return this.users = this.doctorcollection.snapshotChanges().map(
+      changes => { return changes.map( a => {
+          const data = a.payload.doc.data() as Doctores;
+          data.id = a.payload.doc.id;
+          if ( data.id == uid ) {
+            return data;
+          }
+      });
+    });
   }
 
   public createUser(user) {

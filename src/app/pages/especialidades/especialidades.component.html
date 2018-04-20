@@ -1,3 +1,120 @@
-<p>
-  especialidades works!
-</p>
+<nav>
+  <app-header></app-header>
+</nav>
+
+<div class="row">
+  <div class="col-md-2 menu">
+    <app-menu></app-menu>
+  </div>
+  <div class="col-md-10">
+    <div class="contenido">
+
+
+
+
+
+
+
+      <div class="card-columns">
+
+        <div *ngFor="let user of arr | async">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
+                  <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
+                  <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
+                </div>
+            </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="agregar" (click)="showModal(1, 0);">
+        <img src="./assets/img/icon-mas.png" alt="">
+      </div>
+
+      <!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <div *ngIf="!updated">
+            Agregar especialidad
+          </div>
+          <div *ngIf="updated">
+            Modificar especialidad
+          </div>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <input type="text" class="form-control" name="nombre" [(ngModel)]="especialidades.nombre" placeholder="Nombre">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Agregar</button>
+        <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
+      </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="eliminarUsuario" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea eliminar esta especialidad?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="delete(uid);">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+      </div>
+
+      <div *ngIf="result" class="alert alert-success" role="alert">
+        {{success}}
+      </div>
+
+      <div *ngIf="err" class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+    </div><!-- CONTENIDO -->
+  </div>
+</div>
+
+<div class="pie abajo inicio">
+  <app-pie></app-pie>
+</div>

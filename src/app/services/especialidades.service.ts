@@ -17,18 +17,23 @@ export class EspecialidadesService {
   constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
     this.resp = "success"
     this.especialidadcollection = this._db.collection('especialidades');
-    this.hospitales = this.especialidadcollection.snapshotChanges().map(
-      changes => { return changes.map( a => {
-          const data = a.payload.doc.data() as Especialidades;
-          data.id = a.payload.doc.id;
-          return data;
-      });
-    });
-
   }
 
-  public getEspecialidades() {
-    return this.hospitales;
+  public updateEspecialidad( uid, user ) {
+    return this._db.collection("especialidades").doc( uid ).update({
+      nombre: user.nombre
+    })
   }
+
+  public deleteEspecialidad( user ) {
+    let uid:string = user.id;
+    return this._db.collection("especialidades").doc( uid ).delete()
+  }
+
+  public createEspecialidad( user ) {
+    return this.especialidadcollection.add(user);
+  }
+
+
 
 }
