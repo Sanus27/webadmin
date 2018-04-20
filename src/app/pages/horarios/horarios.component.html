@@ -142,10 +142,9 @@
 
                 <div class="col-12">
 
-                  <div class="form-group" *ngIf="!updated">
-                    <select class="form-control">
-                      <option>Seleciona las horas de cada día</option>
-                      <option *ngFor="let dia of dias" [value]="dia">
+                  <div class="form-group">
+                    <select class="form-control" [(ngModel)]="selectedDay" (ngModelChange)="onChangeDays($event)">
+                      <option *ngFor="let dia of diasSelected">
                          {{dia}}
                       </option>
                     </select>
@@ -153,8 +152,11 @@
 
                 </div>
 
+                <div *ngIf="loading" class="jumbotron">
+                    <p class="lead">Estamos cargando el contenido</p>
+                </div>
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora1" [(ngModel)]="hours.hora1">
@@ -173,7 +175,7 @@
                 </div>
 
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora3" [(ngModel)]="hours.hora3">
@@ -191,7 +193,7 @@
 
                 </div>
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora5" [(ngModel)]="hours.hora5">
@@ -210,7 +212,7 @@
                 </div>
 
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora7" [(ngModel)]="hours.hora7">
@@ -228,7 +230,7 @@
 
                 </div>
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora9" [(ngModel)]="hours.hora9">
@@ -247,7 +249,7 @@
                 </div>
 
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora11" [(ngModel)]="hours.hora11">
@@ -265,7 +267,7 @@
 
                 </div>
 
-                <div class="col-6">
+                <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" id="hora13" [(ngModel)]="hours.hora13">
@@ -291,16 +293,18 @@
 
 
             </div>
-            <div class="modal-footer" *ngIf="!next">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="nextView();">Siguiente</button>
-              <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
+            <div class="modal-footer" *ngIf="updated">
+              <button *ngIf="next" type="button" class="btn btn-secondary" (click)="preView();">Regresar</button>
+              <button *ngIf="!next" type="button" class="btn btn-primary" (click)="nextView();">Siguiente</button>
+              <button *ngIf="!next" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button *ngIf="next" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
             </div>
 
-            <div class="modal-footer" *ngIf="next">
-              <button type="button" class="btn btn-secondary" (click)="preView();">Regresar</button>
-              <button *ngIf="!updated" type="button" class="btn btn-primary" (click)="createUser();">Guardar</button>
-              <button *ngIf="updated" type="button" class="btn btn-primary" (click)="updateUser(users);">Modificar</button>
+            <div class="modal-footer" *ngIf="!updated">
+              <button *ngIf="next" type="button" class="btn btn-secondary" (click)="preView();">Regresar</button>
+              <button *ngIf="!next" type="button" class="btn btn-primary" (click)="nextView();">Siguiente</button>
+              <button *ngIf="!next" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button *ngIf="next" type="button" class="btn btn-primary" (click)="createUser();">Guardar</button>
             </div>
 
             <div *ngIf="result" class="alert alert-success" role="alert">
