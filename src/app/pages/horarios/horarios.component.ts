@@ -29,13 +29,13 @@ export class HorariosComponent implements OnInit {
   private hours = { hora1:'', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '', hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' };
 
   private doctorcollection: AngularFirestoreCollection<Doctores>;
-  private Lunes:string;
-  private Martes:string;
-  private Miercoles:string;
-  private Jueves:string;
-  private Viernes:string;
-  private Sabado:string;
-  private Domingo:string;
+  private Lunes:string = "1";
+  private Martes:string = "1";
+  private Miercoles:string = "1";
+  private Jueves:string = "1";
+  private Viernes:string = "1";
+  private Sabado:string = "1";
+  private Domingo:string = "1";
   private diasArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
 
   constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, public _db: AngularFirestore, private _hour:HorariosService ) {
@@ -124,57 +124,67 @@ export class HorariosComponent implements OnInit {
   private editDoctor( user ){
     this.updated = true;
     this.uid = user.id;
-    this.days = {
-        Lunes: undefined,
-        Martes: undefined,
-        Miercoles: undefined,
-        Jueves: undefined,
-        Viernes: undefined,
-        Sabado: undefined,
-        Domingo: undefined
-    }
-    this.hours = {
-        hora1: undefined,
-        hora2: undefined,
-        hora3: undefined,
-        hora4: undefined,
-        hora5: undefined,
-        hora6: undefined,
-        hora7: undefined,
-        hora8: undefined,
-        hora9: undefined,
-        hora10: undefined,
-        hora11: undefined,
-        hora12: undefined,
-        hora13: undefined,
-        hora14: undefined,
-    }
     this._hour.getHorarios( this.uid ).subscribe( data => {
+
+      this.Lunes = "1"
+      this.Martes = "1"
+      this.Miercoles = "1";
+      this.Jueves = "1"
+      this.Viernes = "1"
+      this.Sabado = "1"
+      this.Domingo = "1"
+
+        this.days = {
+           Lunes: "1",
+           Martes: "1",
+           Miercoles: "1",
+           Jueves: "1",
+           Viernes: "1",
+           Sabado: "1",
+           Domingo: "1"
+        }
+
+        this.hours = {
+            hora1: "1",
+            hora2: "1",
+            hora3: "1",
+            hora4: "1",
+            hora5: "1",
+            hora6: "1",
+            hora7: "1",
+            hora8: "1",
+            hora9: "1",
+            hora10: "1",
+            hora11: "1",
+            hora12: "1",
+            hora13: "1",
+            hora14: "1",
+        }
 
         for ( var i = 0; i <= this._hour.dias.length - 1 ; i ++ ) {
 
            if ( this._hour.dias[i] == this.diasArr[0] ) {
-             this.Lunes = "1"
+             this.Lunes = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[1] ) {
-             this.Martes = "1"
+             this.Martes = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[2] ) {
-             this.Miercoles = "1"
+             this.Miercoles = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[3] ) {
-             this.Jueves = "1"
+             this.Jueves = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[4] ) {
-             this.Viernes = "1"
+             this.Viernes = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[5] ) {
-             this.Sabado = "1"
+             this.Sabado = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[6] ) {
-             this.Domingo = "1"
+             this.Domingo = undefined
            }
-           
+
         }
 
 
@@ -188,9 +198,8 @@ export class HorariosComponent implements OnInit {
             Domingo: this.Domingo
         }
 
-        if ( this.Domingo != undefined ) {
-          $('#modal').modal('show');
-        }
+        $('#modal').modal('show');
+
 
 
     })
