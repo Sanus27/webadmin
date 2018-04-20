@@ -6,6 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Usuarios } from '../models/Usuarios';
 import { Doctores } from '../models/Doctores';
+import { Horarios } from '../models/Horarios';
 
 @Injectable()
 export class HorariosService {
@@ -14,6 +15,7 @@ export class HorariosService {
   users: Observable<Usuarios[]>;
   userDoc: AngularFirestoreDocument<Usuarios>;
   private resp:string;
+  public dias:any[];
 
   constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
     this.resp = "success"
@@ -26,6 +28,32 @@ export class HorariosService {
       });
     });
 
+  }
+
+  public getHorarios( uid ) {
+
+
+    return this.getDoctorById( uid ).map( data => {
+        for( var i = 0; i <= data.length - 1; i ++ ){
+            if ( data[i] != undefined ){
+                this.dias = data[i]["dias"]
+            }
+        }
+    })
+
+
+  }
+
+  public getDoctorById( uid ){
+    return this.users = this.horarioscollection.snapshotChanges().map(
+      changes => { return changes.map( a => {
+          const data = a.payload.doc.data() as Horarios;
+          data.id = a.payload.doc.id;
+          if ( data.id == uid ) {
+            return data;
+          }
+      });
+    });
   }
 
   public getHours( uid ) {

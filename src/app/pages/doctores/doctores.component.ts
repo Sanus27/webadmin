@@ -72,7 +72,7 @@ export class DoctoresComponent implements OnInit {
               });
 
 
-              this._hospi.getHospitals().subscribe( (hospitales: Especialidades[]) => {
+              this._hospi.getHospitals().subscribe( (hospitales: Hospitales[]) => {
                   this.hospitales = hospitales;
               })
 

@@ -13,10 +13,22 @@ export class EspecialidadesService {
   hospitales: Observable<Especialidades[]>;
   userDoc: AngularFirestoreDocument<Especialidades>;
   private resp:string
+  arr:any;
 
   constructor( public _db: AngularFirestore, public _auth:AngularFireAuth ) {
     this.resp = "success"
     this.especialidadcollection = this._db.collection('especialidades');
+    this.arr = this.especialidadcollection.snapshotChanges().map(
+      changes => { return changes.map( a => {
+          const data = a.payload.doc.data() as Especialidades;
+          data.id = a.payload.doc.id;
+          return data;
+      });
+    });
+  }
+
+  public getEspecialidades(){
+    return this.arr
   }
 
   public updateEspecialidad( uid, user ) {

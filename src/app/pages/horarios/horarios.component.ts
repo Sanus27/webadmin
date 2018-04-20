@@ -7,7 +7,8 @@ import { LocalStorageService } from '../../services/localstorage.service';
 import { DoctoresService } from '../../services/doctores.service';
 import { HorariosService } from '../../services/horarios.service';
 
-import { Usuarios } from '../../models/Usuarios';
+import { Doctores } from '../../models/Doctores';
+import { Horarios } from '../../models/Horarios';
 
 declare var $:any;
 
@@ -23,25 +24,26 @@ export class HorariosComponent implements OnInit {
   private success:string;
   private uid:any;
   private updated:boolean;
-  private next:boolean;
   private arr: any;
-  private schedules: any[] = [];
-  private dias = []
-  private days = { Lunes: '', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: ''}
-  private hours = { hora1: '', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '' , hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' }
-  private doctors = { cedula:'', especialidad: '', hospital: '' }
-  private daysArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
+  private days = { Lunes:'', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: '' };
+  private hours = { hora1:'', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '', hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' };
 
-  userscollection: AngularFirestoreCollection<Usuarios>;
-  userss: Observable<Usuarios[]>;
+  private doctorcollection: AngularFirestoreCollection<Doctores>;
+  private Lunes:string;
+  private Martes:string;
+  private Miercoles:string;
+  private Jueves:string;
+  private Viernes:string;
+  private Sabado:string;
+  private Domingo:string;
+  private diasArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
 
-  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, private _hour:HorariosService, public _db: AngularFirestore ) {
+  constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, public _db: AngularFirestore, private _hour:HorariosService ) {
     this.uid = this._sesion.cargarSesion();
     this.success = ""
     this.result = false
     this.err = false
     this.error = ""
-    this.next = false
   }
 
   ngOnInit() {
@@ -57,15 +59,16 @@ export class HorariosComponent implements OnInit {
 
             } else {
 
-
-              this.userscollection = this._db.collection('usuarios');
-              this.arr = this.userscollection.snapshotChanges().map(
+              this.doctorcollection = this._db.collection('usuarios');
+              this.arr = this.doctorcollection.snapshotChanges().map(
                 changes => { return changes.map( a => {
-                    const data = a.payload.doc.data() as Usuarios;
+                    const data = a.payload.doc.data() as Doctores;
                     data.id = a.payload.doc.id;
                     return data;
                 });
               });
+
+
 
             }
 
@@ -77,15 +80,19 @@ export class HorariosComponent implements OnInit {
   }
 
 
+  private showModal( id, user ){
+    if( id == 1){
+      this.newDoctor()
+    }
+    if( id == 2){
+      this.editDoctor(user);
+    }
+    this.success = ""
+    this.result = false
+  }
 
-  private showModal( i, user ){
-
-    this.next = false
-    this.updated = false;
-    this.uid = user.id;
-
-    if ( i === 1 ) {
-      //insertar
+  private newDoctor(){
+      this.updated = false;
       this.days = {
           Lunes: undefined,
           Martes: undefined,
@@ -95,7 +102,6 @@ export class HorariosComponent implements OnInit {
           Sabado: undefined,
           Domingo: undefined
       }
-
       this.hours = {
           hora1: undefined,
           hora2: undefined,
@@ -110,98 +116,90 @@ export class HorariosComponent implements OnInit {
           hora11: undefined,
           hora12: undefined,
           hora13: undefined,
-          hora14: undefined
+          hora14: undefined,
       }
-
-    } else {
-      //actualizar
-      this.getData( this.uid )
-      this.days = {
-          Lunes: user.Lunes,
-          Martes: user.Martes,
-          Miercoles: user.Miercoles,
-          Jueves: user.Jueves,
-          Viernes: user.Viernes,
-          Sabado: user.Sábado,
-          Domingo: user.Domingo
-      }
-
-      this.hours = {
-          hora1: user.hora1,
-          hora2: user.hora2,
-          hora3: user.hora3,
-          hora4: user.hora4,
-          hora5: user.hora5,
-          hora6: user.hora6,
-          hora7: user.hora7,
-          hora8: user.hora8,
-          hora9: user.hora9,
-          hora10: user.hora10,
-          hora11: user.hora11,
-          hora12: user.hora12,
-          hora13: user.hora13,
-          hora14: user.hora14
-      }
-
-    }
-    this.success = ""
-    this.result = false
-    $('#modal').modal('show');
+      $('#modal').modal('show');
   }
 
-  private getData( uid ){
-    this._hour.getHours( uid ).subscribe( (hours: any[]) => {
+  private editDoctor( user ){
+    this.updated = true;
+    this.uid = user.id;
+    this.days = {
+        Lunes: undefined,
+        Martes: undefined,
+        Miercoles: undefined,
+        Jueves: undefined,
+        Viernes: undefined,
+        Sabado: undefined,
+        Domingo: undefined
+    }
+    this.hours = {
+        hora1: undefined,
+        hora2: undefined,
+        hora3: undefined,
+        hora4: undefined,
+        hora5: undefined,
+        hora6: undefined,
+        hora7: undefined,
+        hora8: undefined,
+        hora9: undefined,
+        hora10: undefined,
+        hora11: undefined,
+        hora12: undefined,
+        hora13: undefined,
+        hora14: undefined,
+    }
+    this._hour.getHorarios( this.uid ).subscribe( data => {
 
-       for ( var i = 0; i <= hours.length - 1 ; i ++ ){
-          if ( hours[i]["id"] == uid) {
-            this.selectCheckbox( hours[i]["dias"] )
-            this.schedules.push( hours[i]["dias"] )
-          }
-       }
+        for ( var i = 0; i <= this._hour.dias.length - 1 ; i ++ ) {
+
+           if ( this._hour.dias[i] == this.diasArr[0] ) {
+             this.Lunes = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[1] ) {
+             this.Martes = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[2] ) {
+             this.Miercoles = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[3] ) {
+             this.Jueves = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[4] ) {
+             this.Viernes = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[5] ) {
+             this.Sabado = "1"
+           }
+           if ( this._hour.dias[i] == this.diasArr[6] ) {
+             this.Domingo = "1"
+           }
+           
+        }
+
+
+        this.days = {
+            Lunes: this.Lunes,
+            Martes: this.Martes,
+            Miercoles: this.Miercoles,
+            Jueves: this.Jueves,
+            Viernes: this.Viernes,
+            Sabado: this.Sabado,
+            Domingo: this.Domingo
+        }
+
+        if ( this.Domingo != undefined ) {
+          $('#modal').modal('show');
+        }
 
 
     })
-  }
 
-  private selectCheckbox( dia ){
 
-    this.days = {
-        Lunes: "1",
-        Martes: "1",
-        Miercoles: "1",
-        Jueves: "1",
-        Viernes: "1",
-        Sabado: "1",
-        Domingo: "1"
-    }
 
-    for ( var i = 0; i <= dia.length - 1 ; i ++ ){
-
-        if (dia[i] == this.daysArr[0] ) {
-            this.days.Lunes = undefined
-        }
-        if (dia[i] == this.daysArr[1] ) {
-            this.days.Martes = undefined
-        }
-        if (dia[i] == this.daysArr[2] ) {
-            this.days.Miercoles = undefined
-        }
-        if (dia[i] == this.daysArr[3] ) {
-            this.days.Jueves = undefined
-        }
-        if (dia[i] == this.daysArr[4] ) {
-            this.days.Viernes = undefined
-        }
-        if (dia[i] == this.daysArr[5] ) {
-            this.days.Sabado = undefined
-        }
-        if (dia[i] == this.daysArr[6] ) {
-            this.days.Domingo = undefined
-        }
-
-    }
 
   }
+
 
   private showDelete( user ){
     this.uid = user;
@@ -209,22 +207,36 @@ export class HorariosComponent implements OnInit {
     $('#eliminarUsuario').modal('show');
   }
 
-  private nextView(){
-    this.next = true
-  }
-
-  private preView(){
-    this.next = false
-  }
-
   private createUser(){
     this.err = false
-    console.log( this.hours )
-    console.log( this.days )
-    // this._hour.addHour(this.days).then( (data => {
+    // this._user.createUser(this.users).then( (data => {
+    //   let uid = data.uid
+    //
+    //   this._user.addUser( uid, this.users ).then( (result) => {
+    //
+    //       this._user.addDoctor( uid, this.doctors ).then( (result) => {
+    //         this.result = true
+    //         this.success = "Se ha registrado el usuario correctamente"
+    //       }).catch( (err) => {
+    //         console.log("error de usuario en db: ", err)
+    //       })
+    //
+    //   }).catch( (err) => {
+    //     console.log("error de usuario en db: ", err)
+    //   })
     //
     // })).catch( (error) => {
-    //
+    //   if (error.code == "auth/invalid-email") {
+    //     this.err = true
+    //     this.error = "Este no es un correo valido"
+    //     console.log("auth/invalid-email")
+    //   }
+    //   if (error.code == "auth/email-already-in-use") {
+    //     this.err = true
+    //     this.error = "Este correo ya tiene una cuenta"
+    //     console.log("auth/email-already-in-use")
+    //   }
+    //   console.log("error de autenticacion: ", error)
     // })
   }
 
@@ -244,13 +256,13 @@ export class HorariosComponent implements OnInit {
   private updateUser( ){
     this.err = false
     this.result = false
-    this._user.update( this.uid, this.days ).then( (resp) => {
-      this.result = true
-      this.success = "Se han hecho los cambios correctamente"
-    }).catch( (error) => {
-      this.err = true
-      this.error = "Se ha producido un error, intentalo mas tarde"
-    })
+    // this._user.update( this.uid, this.users ).then( (resp) => {
+    //   this.result = true
+    //   this.success = "Se han hecho los cambios correctamente"
+    // }).catch( (error) => {
+    //   this.err = true
+    //   this.error = "Se ha producido un error, intentalo mas tarde"
+    // })
   }
 
 
