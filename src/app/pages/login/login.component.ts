@@ -24,7 +24,7 @@ export class LoginComponent  implements OnInit{
   ngOnInit() {
 
     let uid = this._sesion.cargarSesion();
-    if( uid){
+    if( uid ){
       this._auth.showUser(uid).valueChanges().subscribe( resp =>{
           let dataUser = resp;
           if ( dataUser != null ){
@@ -55,16 +55,22 @@ export class LoginComponent  implements OnInit{
             setTimeout(() => {
 
               let dataUser = this._auth.userInfo;
-              let typeUser = dataUser[0]["tipo"];
-              if( typeUser === "Admin"){
-                this._sesion.guardarSesion( this._auth.usuario["uid"] );
-                this._router.navigate(["/inicio"]);
+              let typeUser:string? = dataUser[0]["tipo"];
+
+              if ( typeUser != null || typeUser != undefined ){
+                  if( typeUser === "Admin"){
+                      this._sesion.guardarSesion( this._auth.usuario["uid"] );
+                      this._router.navigate(["/inicio"]);
+                  } else {
+                      this.loadModal = false;
+                      this.titleModal = "Acceso restringido";
+                      this.bodyModal = "Está cuenta no tiene los premisos para entrar al sistema";
+                      $('#modal').modal('show');
+                  }
               } else {
-                this.loadModal = false;
-                this.titleModal = "Acceso restringido";
-                this.bodyModal = "Está cuenta no tiene los premisos para entrar al sistema";
-                $('#modal').modal('show');
+                this.startLogin()
               }
+
 
             }, 500);
 
