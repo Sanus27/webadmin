@@ -66,7 +66,7 @@ export class HorariosComponent implements OnInit {
   private hora13:any;
   private hora14:any;
 
-  private diasArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
+  private diasArr = [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" ]
   private horasArr = [ "6:00 am - 7:00 am", "7:00 am - 8:00 am", "8:00 am - 9:00 am", "9:00 am - 10:00 am",  "10:00 am - 11:00 am", "11:00 am - 12:00 pm", "12:00 pm - 1:00 pm", "1:00 pm - 2:00 pm", "2:00 pm - 3:00 pm", "3:00 pm - 4:00 pm", "4:00 pm - 5:00 pm", "5:00 pm - 6:00 pm", "6:00 pm - 7:00 pm", "7:00 pm - 8:00 pm" ]
 
   constructor( private _router:Router, private _auth:Auth_Service,  public _user: DoctoresService, private _sesion:LocalStorageService, public _db: AngularFirestore, private _hour:HorariosService ) {
@@ -125,6 +125,14 @@ export class HorariosComponent implements OnInit {
     this.arrViernes = []
     this.arrSabado = []
     this.arrDomingo = []
+
+    this.removeAll(this.arrLunes)
+    this.removeAll(this.arrMartes)
+    this.removeAll(this.arrMiercoles)
+    this.removeAll(this.arrJuevez)
+    this.removeAll(this.arrViernes)
+    this.removeAll(this.arrSabado)
+    this.removeAll(this.arrDomingo)
 
     if( id == 1){
       this.newDoctor()
@@ -253,7 +261,7 @@ export class HorariosComponent implements OnInit {
         }
 
         if ( this.Miercoles != undefined ){
-          this.diasSelected.push("Miércoles")
+          this.diasSelected.push("Miercoles")
         }
 
         if ( this.Jueves != undefined ){
@@ -265,7 +273,7 @@ export class HorariosComponent implements OnInit {
         }
 
         if ( this.Sabado != undefined ){
-          this.diasSelected.push("Sábado")
+          this.diasSelected.push("Sabado")
         }
 
         if ( this.Domingo != undefined ){
@@ -283,8 +291,8 @@ export class HorariosComponent implements OnInit {
               this.diasSelected.push("Martes")
           }
           if ( this.days.Miercoles != undefined ){
-              this.selectedDay.push("Miércoles")
-              this.diasSelected.push("Miércoles")
+              this.selectedDay.push("Miercoles")
+              this.diasSelected.push("Miercoles")
           }
           if ( this.days.Jueves != undefined ){
               this.selectedDay.push("Jueves")
@@ -295,8 +303,8 @@ export class HorariosComponent implements OnInit {
               this.diasSelected.push("Viernes")
           }
           if ( this.days.Sabado != undefined ){
-              this.selectedDay.push("Sábado")
-              this.diasSelected.push("Sábado")
+              this.selectedDay.push("Sabado")
+              this.diasSelected.push("Sabado")
           }
           if ( this.days.Domingo != undefined ){
               this.selectedDay.push("Domingo")
@@ -330,8 +338,8 @@ export class HorariosComponent implements OnInit {
       this.hora13 = false;
       this.hora14 = false;
 
-        this.showHours = true
-        this.loading = false
+      this.showHours = true
+      this.loading = false
 
     } else {
       this.showHours = false
@@ -355,28 +363,30 @@ export class HorariosComponent implements OnInit {
   private createUser(){
     this.err = false
 
-    console.log("guardar")
-    console.log( this.arrLunes )
+    if (this.arrLunes.length > 0) {
+
+        for( var i = 0; i < this.arrLunes.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Lunes',
+              hora: this.arrLunes[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
 
 
 
-    // let data = {
-    //   id: 'bbjimesunabbnojona',
-    //   dia: 'Lunes',
-    //   hora: '2:27'
-    // }
-    // this._hour.addHour( data ).then( (data => {
-    //   this.result = true
-    //   this.success = "Se ha guardado el horario correctamente"
-    // })).catch( (error) => {
-    //   console.log("error")
-    //   console.log(error)
-    //   if (error.code == "auth/email-already-in-use") {
-    //     this.err = true
-    //     this.error = "Este correo ya tiene una cuenta"
-    //     console.log("auth/email-already-in-use")
-    //   }
-    // })
+
   }
 
   private delete(){
@@ -414,25 +424,833 @@ export class HorariosComponent implements OnInit {
      }
   }
 
+  private removeAll(arr) {
+     var i, j;
+     for(j = 0; j < arr.length; j++){
+       while((i = arr.indexOf(arr[j])) !== -1) {
+         arr.splice(i, 1);
+       }
+     }
+  }
+
   private selectData( value, event ) {
 
     if ( this.selectedDay27 == this.diasArr[0] ) {
 
-        if ( value == "hora1") {
-            if (event) {
-                this.arrLunes.push("6:00 am - 7:00 am")
-            } else {
-                this.remove(this.arrLunes, "6:00 am - 7:00 am")
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrLunes.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrLunes, "6:00 am - 7:00 am")
+                }
             }
-        }
 
-        if ( value == "hora2") {
-            if (event) {
-                this.arrLunes.push("7:00 am - 8:00 am")
-            } else {
-                this.remove(this.arrLunes, "7:00 am - 8:00 am")
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrLunes.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrLunes, "7:00 am - 8:00 am")
+                }
             }
-        }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrLunes.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrLunes, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrLunes.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrLunes, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrLunes.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrLunes, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrLunes.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrLunes.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrLunes.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrLunes.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrLunes.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrLunes.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrLunes.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrLunes.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrLunes.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrLunes, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[1] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrMartes.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrMartes, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrMartes.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrMartes, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrMartes.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrMartes, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrMartes.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrMartes, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrMartes.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrMartes, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrMartes.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrMartes.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrMartes.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrMartes.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrMartes.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrMartes.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrMartes.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrMartes.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrMartes.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrMartes, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[2] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrMiercoles.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrMiercoles, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrMiercoles.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrMiercoles, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrMiercoles.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrMiercoles, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrMiercoles.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrMiercoles, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrMiercoles.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrMiercoles, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrMiercoles.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrMiercoles.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrMiercoles.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrMiercoles.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrMiercoles.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrMiercoles.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrMiercoles.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrMiercoles.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrMiercoles.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrMiercoles, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[3] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrJuevez.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrJuevez, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrJuevez.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrJuevez, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrJuevez.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrJuevez, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrJuevez.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrJuevez, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrJuevez.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrJuevez, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrJuevez.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrJuevez.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrJuevez.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrJuevez.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrJuevez.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrJuevez.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrJuevez.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrJuevez.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrJuevez.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrJuevez, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[4] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrViernes.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrViernes, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrViernes.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrViernes, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrViernes.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrViernes, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrViernes.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrViernes, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrViernes.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrViernes, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrViernes.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrViernes.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrViernes.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrViernes.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrViernes.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrViernes.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrViernes.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrViernes.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrViernes.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrViernes, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[5] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrSabado.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrSabado, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrSabado.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrSabado, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrSabado.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrSabado, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrSabado.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrSabado, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrSabado.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrSabado, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrSabado.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrSabado.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrSabado.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrSabado.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrSabado.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrSabado.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrSabado.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrSabado.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrSabado.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrSabado, "7:00 pm - 8:00 pm")
+                }
+            }
+
+
+    }
+
+    if ( this.selectedDay27 == this.diasArr[6] ) {
+
+            if ( value == "hora1") {
+                if (event) {
+                    this.arrDomingo.push("6:00 am - 7:00 am")
+                } else {
+                    this.remove(this.arrDomingo, "6:00 am - 7:00 am")
+                }
+            }
+
+            if ( value == "hora2") {
+                if (event) {
+                    this.arrDomingo.push("7:00 am - 8:00 am")
+                } else {
+                    this.remove(this.arrDomingo, "7:00 am - 8:00 am")
+                }
+            }
+
+            if ( value == "hora3") {
+                if (event) {
+                    this.arrDomingo.push("8:00 am - 9:00 am")
+                } else {
+                    this.remove(this.arrDomingo, "8:00 am - 9:00 am")
+                }
+            }
+
+            if ( value == "hora4") {
+                if (event) {
+                    this.arrDomingo.push("9:00 am - 10:00 am")
+                } else {
+                    this.remove(this.arrDomingo, "9:00 am - 10:00 am")
+                }
+            }
+
+            if ( value == "hora5") {
+                if (event) {
+                    this.arrDomingo.push("10:00 am - 11:00 am")
+                } else {
+                    this.remove(this.arrDomingo, "10:00 am - 11:00 am")
+                }
+            }
+
+            if ( value == "hora6") {
+                if (event) {
+                    this.arrDomingo.push("11:00 am - 12:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "11:00 am - 12:00 pm")
+                }
+            }
+
+            if ( value == "hora7") {
+                if (event) {
+                    this.arrDomingo.push("12:00 pm - 1:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "12:00 pm - 1:00 pm")
+                }
+            }
+
+            if ( value == "hora8") {
+                if (event) {
+                    this.arrDomingo.push("1:00 pm - 2:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "1:00 pm - 2:00 pm")
+                }
+            }
+
+            if ( value == "hora9") {
+                if (event) {
+                    this.arrDomingo.push("2:00 pm - 3:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "2:00 pm - 3:00 pm")
+                }
+            }
+
+            if ( value == "hora10") {
+                if (event) {
+                    this.arrDomingo.push("3:00 pm - 4:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "3:00 pm - 4:00 pm")
+                }
+            }
+
+            if ( value == "hora11") {
+                if (event) {
+                    this.arrDomingo.push("4:00 pm - 5:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "4:00 pm - 5:00 pm")
+                }
+            }
+
+            if ( value == "hora12") {
+                if (event) {
+                    this.arrDomingo.push("5:00 pm - 6:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "5:00 pm - 6:00 pm")
+                }
+            }
+
+            if ( value == "hora13") {
+                if (event) {
+                    this.arrDomingo.push("6:00 pm - 7:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "6:00 pm - 7:00 pm")
+                }
+            }
+
+            if ( value == "hora14") {
+                if (event) {
+                    this.arrDomingo.push("7:00 pm - 8:00 pm")
+                } else {
+                    this.remove(this.arrDomingo, "7:00 pm - 8:00 pm")
+                }
+            }
+
 
     }
 
