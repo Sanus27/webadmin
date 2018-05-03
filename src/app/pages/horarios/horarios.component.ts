@@ -385,6 +385,145 @@ export class HorariosComponent implements OnInit {
     }
 
 
+    if (this.arrMartes.length > 0) {
+
+        for( var i = 0; i < this.arrMartes.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Martes',
+              hora: this.arrMartes[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+    if (this.arrMiercoles.length > 0) {
+
+        for( var i = 0; i < this.arrMiercoles.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Miércoles',
+              hora: this.arrMiercoles[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+
+    if (this.arrJuevez.length > 0) {
+
+        for( var i = 0; i < this.arrJuevez.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Jueves',
+              hora: this.arrJuevez[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+
+    if (this.arrViernes.length > 0) {
+
+        for( var i = 0; i < this.arrViernes.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Viernes',
+              hora: this.arrViernes[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+
+    if (this.arrSabado.length > 0) {
+
+        for( var i = 0; i < this.arrSabado.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Sábado',
+              hora: this.arrSabado[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+    if (this.arrDomingo.length > 0) {
+
+        for( var i = 0; i < this.arrDomingo.length ; i++ ){
+
+            let data = {
+              id: this.uid,
+              dia: 'Domingo',
+              hora: this.arrDomingo[i]
+            }
+            this._hour.addHour( data ).then( (data => {
+                this.result = true
+                this.success = "Se ha guardado el horario correctamente"
+            })).catch( (error) => {
+                console.log("error")
+                console.log(error)
+            })
+
+        }
+
+    }
+
+
+
+
+
+
 
 
   }
