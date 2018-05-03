@@ -50,6 +50,7 @@ export class HorariosComponent implements OnInit {
   private arrViernes:any;
   private arrSabado:any;
   private arrDomingo:any;
+  private arrAusent:any;
 
   private hora1:any;
   private hora2:any;
@@ -362,6 +363,7 @@ export class HorariosComponent implements OnInit {
 
   private createUser(){
     this.err = false
+    this.arrAusent = []
 
     if (this.arrLunes.length > 0) {
 
@@ -382,6 +384,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Lunes")
     }
 
 
@@ -404,6 +408,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Martes")
     }
 
 
@@ -426,6 +432,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Miércoles")
     }
 
 
@@ -449,6 +457,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Jueves")
     }
 
 
@@ -472,6 +482,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Viernes")
     }
 
 
@@ -495,6 +507,8 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Sábado")
     }
 
 
@@ -517,15 +531,27 @@ export class HorariosComponent implements OnInit {
 
         }
 
+    } else {
+        this.arrAusent.push("Domingo")
     }
 
 
+    this.addAusent()
 
 
 
 
 
 
+  }
+
+  private addAusent(){
+    this._hour.addAusent( this.uid, this.arrAusent ).then( (data => {
+        console.log(data)
+    })).catch( (error) => {
+        console.log("error")
+        console.log(error)
+    })
   }
 
   private delete(){

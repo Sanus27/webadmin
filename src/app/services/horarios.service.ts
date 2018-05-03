@@ -77,11 +77,15 @@ export class HorariosService {
   }
 
 
-
-
   public addHour( user ){
     return this.horarioscollection.doc( user.id ).collection( user.dia ).add({
       hora: user.hora,
+    })
+  }
+
+  public addAusent( uid, user ){
+    return this.horarioscollection.doc( uid ).set({
+      dias: user,
     })
   }
 
