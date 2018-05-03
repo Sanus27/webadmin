@@ -38,7 +38,7 @@ export class HorariosService {
   }
 
   public getDaysById( uid ){
-    return this.days = this.diascollection.snapshotChanges().map(
+    return this.diascollection.snapshotChanges().map(
       changes => { return changes.map( a => {
           const data = a.payload.doc.data() as Horarios;
           data.id = a.payload.doc.id;
@@ -55,18 +55,15 @@ export class HorariosService {
     this.horarios = []
     return this.getHorsById( uid, dia ).map( data => {
         for( var i = 0; i <= data.length - 1; i ++ ){
-          if ( data[i] != undefined ){
             this.horarios.push( data[i]["hora"] )
-          }
         }
     })
   }
 
   public getHorsById( uid, dia ){
-    return this.days = this.horarioscollection.doc( uid ).collection(dia).snapshotChanges().map(
+    return this.horarioscollection.doc( uid ).collection(dia).snapshotChanges().map(
       changes => { return changes.map( a => {
           const data = a.payload.doc.data() as Horarios;
-          data.id = a.payload.doc.id;
           return data;
       });
     });
@@ -85,6 +82,12 @@ export class HorariosService {
 
   public addAusent( uid, user ){
     return this.horarioscollection.doc( uid ).set({
+      dias: user,
+    })
+  }
+
+  public updateAusent( uid, user ){
+    return this.horarioscollection.doc( uid ).update({
       dias: user,
     })
   }

@@ -23,7 +23,7 @@
                   <img class="card-imgs" src="{{user.avatar | finfoto }}" alt="">
                   <h5 class="card-title">{{user.nombre}} {{user.apellido}}</h5>
                   <a class="card-link badge badge-danger text-white" (click)="showDelete(user);">Eliminar</a>
-                  <a class="badge badge-success text-white" (click)="showModal(2, user);">Actualizar</a>
+                  <a class="badge badge-success text-white" (click)="showModal(2, user);">Ver horario</a>
                   <a class="card-link badge badge-primary text-white" (click)="showModal(1,user);">Agregar</a>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                   <button *ngIf="next" type="button" class="btn btn-secondary" (click)="preView();">Regresar</button>
                   <button *ngIf="!next" type="button" class="btn btn-primary" (click)="nextView();">Siguiente</button>
                   <button *ngIf="!next" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button *ngIf="next" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button>
+                  <!-- <button *ngIf="next" type="button" class="btn btn-primary" (click)="updateUser();">Modificar</button> -->
                 </div>
 
                 <div class="modal-footer" *ngIf="!updated">

@@ -27,6 +27,7 @@ export class HorariosComponent implements OnInit {
   private uid:any;
   private updated:boolean;
   private arr: any;
+  private exist:boolean;
   private next:boolean;
   private days = { Lunes:'', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: '' };
 
@@ -79,6 +80,7 @@ export class HorariosComponent implements OnInit {
     this.next = false
     this.showHours = false
     this.loading = false
+    this.exist = false
   }
 
   ngOnInit() {
@@ -119,6 +121,7 @@ export class HorariosComponent implements OnInit {
     this.loading = false
     this.uid = user.id;
 
+    this.arrAusent = []
     this.arrLunes = []
     this.arrMartes = []
     this.arrMiercoles = []
@@ -127,6 +130,7 @@ export class HorariosComponent implements OnInit {
     this.arrSabado = []
     this.arrDomingo = []
 
+    this.removeAll(this.arrAusent)
     this.removeAll(this.arrLunes)
     this.removeAll(this.arrMartes)
     this.removeAll(this.arrMiercoles)
@@ -178,6 +182,7 @@ export class HorariosComponent implements OnInit {
   private editDoctor( user ){
     this.updated = true;
     this.uid = user.id;
+    this.diasSelected = ["Seleciona las horas de cada día"]
     this._hour.getDays( this.uid ).subscribe( data => {
 
       this.Lunes = "1"
@@ -206,7 +211,7 @@ export class HorariosComponent implements OnInit {
            if ( this._hour.dias[i] == this.diasArr[1] ) {
              this.Martes = undefined
            }
-           if ( this._hour.dias[i] == this.diasArr[2] ) {
+           if ( this._hour.dias[i] == 'Miércoles' ) {
              this.Miercoles = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[3] ) {
@@ -215,7 +220,7 @@ export class HorariosComponent implements OnInit {
            if ( this._hour.dias[i] == this.diasArr[4] ) {
              this.Viernes = undefined
            }
-           if ( this._hour.dias[i] == this.diasArr[5] ) {
+           if ( this._hour.dias[i] == 'Sábado' ) {
              this.Sabado = undefined
            }
            if ( this._hour.dias[i] == this.diasArr[6] ) {
@@ -224,6 +229,27 @@ export class HorariosComponent implements OnInit {
 
         }
 
+        if ( this.Lunes != undefined ){
+          this.diasSelected.push("Lunes")
+        }
+        if ( this.Martes != undefined ){
+          this.diasSelected.push("Martes")
+        }
+        if ( this.Miercoles != undefined ){
+          this.diasSelected.push("Miercoles")
+        }
+        if ( this.Jueves != undefined ){
+          this.diasSelected.push("Jueves")
+        }
+        if ( this.Viernes != undefined ){
+          this.diasSelected.push("Viernes")
+        }
+        if ( this.Sabado != undefined ){
+          this.diasSelected.push("Sabado")
+        }
+        if ( this.Domingo != undefined ){
+          this.diasSelected.push("Domingo")
+        }
 
         this.days = {
             Lunes: this.Lunes,
@@ -250,38 +276,6 @@ export class HorariosComponent implements OnInit {
     this.next = true
     this.selectedDay = []
     this.diasSelected = ["Seleciona las horas de cada día"]
-    //dias selecionados para mostrar en actualizar
-    if ( this.updated ){
-
-        if ( this.Lunes != undefined ){
-          this.diasSelected.push("Lunes")
-        }
-
-        if ( this.Martes != undefined ){
-          this.diasSelected.push("Martes")
-        }
-
-        if ( this.Miercoles != undefined ){
-          this.diasSelected.push("Miercoles")
-        }
-
-        if ( this.Jueves != undefined ){
-          this.diasSelected.push("Jueves")
-        }
-
-        if ( this.Viernes != undefined ){
-          this.diasSelected.push("Viernes")
-        }
-
-        if ( this.Sabado != undefined ){
-          this.diasSelected.push("Sabado")
-        }
-
-        if ( this.Domingo != undefined ){
-          this.diasSelected.push("Domingo")
-        }
-   } else {
-
           //dias selecionados para mostrar en insertar
           if ( this.days.Lunes != undefined ){
               this.selectedDay.push("Lunes")
@@ -312,7 +306,7 @@ export class HorariosComponent implements OnInit {
               this.diasSelected.push("Domingo")
           }
 
-    }
+
 
   }
 
@@ -342,6 +336,63 @@ export class HorariosComponent implements OnInit {
       this.showHours = true
       this.loading = false
 
+      if ( this.updated ){
+        if( value == this.diasArr[2]){
+          value = 'Miércoles'
+        }
+        if( value == this.diasArr[5]){
+          value = 'Sábado'
+        }
+        this._hour.getHorarios( this.uid, value ).subscribe( data => {
+
+          for(var i = 0; i < this._hour.horarios.length; i++){
+            if ( this._hour.horarios[i] == this.horasArr[0]) {
+              this.hora1 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[1]) {
+              this.hora2 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[2]) {
+              this.hora3 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[3]) {
+              this.hora4 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[4]) {
+              this.hora5 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[5]) {
+              this.hora6 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[6]) {
+              this.hora7 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[7]) {
+              this.hora8 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[8]) {
+              this.hora9 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[9]) {
+              this.hora10 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[10]) {
+              this.hora11 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[11]) {
+              this.hora12 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[12]) {
+              this.hora13 = true
+            }
+            if ( this._hour.horarios[i] == this.horasArr[13]) {
+              this.hora14 = true
+            }
+          }
+
+        })
+      }
+
     } else {
       this.showHours = false
       this.loading = false
@@ -363,7 +414,6 @@ export class HorariosComponent implements OnInit {
 
   private createUser(){
     this.err = false
-    this.arrAusent = []
 
     if (this.arrLunes.length > 0) {
 
@@ -554,32 +604,199 @@ export class HorariosComponent implements OnInit {
     })
   }
 
-  private delete(){
-    this.err = false
-    this.result = false
-    this.arrLunes = []
-    // this._hour.deleteUser( this.uid ).then( (resp) => {
-    //   this.result = true
-    //   this.success = "Se ha eliminado con exito el usuario"
-    // }).catch( (error) => {
-    //   this.err = true
-    //   this.error = "Se ha producido un error, intentalo mas tarde"
-    // })
+  private updateAusent(){
+    this._hour.updateAusent( this.uid, this.arrAusent ).then( (data => {
+        console.log(data)
+    })).catch( (error) => {
+        console.log("error")
+        console.log(error)
+    })
+  }
 
+  private delete(){
+    this._hour.deleteHour( this.uid.id ).then( (resp) => {
+      this.result = true
+      this.success = "Se ha eliminado con exito el usuario"
+    }).catch( (error) => {
+      this.err = true
+      this.error = "Se ha producido un error, intentalo mas tarde"
+    })
   }
 
   private updateUser(){
     this.err = false
     this.result = false
-    this.arrLunes = []
-    console.log( this.selectedDay )
-    // this._hour.update( this.users ).then( (resp) => {
-    //   this.result = true
-    //   this.success = "Se han hecho los cambios correctamente"
-    // }).catch( (error) => {
-    //   this.err = true
-    //   this.error = "Se ha producido un error, intentalo mas tarde"
-    // })
+    console.log( this.uid )
+    console.log( this.arrLunes )
+
+    // if (this.arrLunes.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrLunes.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Lunes',
+    //           hora: this.arrLunes[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Lunes")
+    // }
+    //
+    // if (this.arrMartes.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrMartes.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Martes',
+    //           hora: this.arrMartes[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Martes")
+    // }
+    //
+    // if (this.arrMiercoles.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrMiercoles.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Miércoles',
+    //           hora: this.arrMiercoles[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Miércoles")
+    // }
+    //
+    //
+    //
+    // if (this.arrJuevez.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrJuevez.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Jueves',
+    //           hora: this.arrJuevez[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Jueves")
+    // }
+    //
+    //
+    // if (this.arrViernes.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrViernes.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Viernes',
+    //           hora: this.arrViernes[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Viernes")
+    // }
+    //
+    //
+    // if (this.arrSabado.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrSabado.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Sábado',
+    //           hora: this.arrSabado[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Sábado")
+    // }
+    //
+    //
+    // if (this.arrDomingo.length > 0) {
+    //
+    //     for( var i = 0; i < this.arrDomingo.length ; i++ ){
+    //
+    //         let data = {
+    //           id: this.uid,
+    //           dia: 'Domingo',
+    //           hora: this.arrDomingo[i]
+    //         }
+    //
+    //         this._hour.updateHour( data ).then( (resp) => {
+    //            this.result = true
+    //            this.success = "Se han hecho los cambios correctamente"
+    //         }).catch( (error) => {
+    //            console.log(error)
+    //         })
+    //
+    //     }
+    //
+    // } else {
+    //     this.arrAusent.push("Domingo")
+    // }
+    //
+    // this.updateAusent()
+
   }
 
   private remove(arr, item) {
