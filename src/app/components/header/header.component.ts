@@ -18,7 +18,6 @@ export class HeaderComponent{
     this._auth.signOut();
     this._sesion.eliminarSesion();
     this._router.navigate(["/login"]);
-    console.log("saliendo...");
   }
 
 }

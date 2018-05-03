@@ -29,7 +29,7 @@ export class HorariosComponent implements OnInit {
   private arr: any;
   private next:boolean;
   private days = { Lunes:'', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: '' };
-  private hours = { hora1:'', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '', hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' };
+  private hours = { hora1: '', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '', hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' };
 
   private doctorcollection: AngularFirestoreCollection<Doctores>;
   private Lunes:string = "1";
@@ -42,20 +42,30 @@ export class HorariosComponent implements OnInit {
   private diasSelected:any;
   private selectedDay:any;
 
-  private hora1:string = undefined;
-  private hora2:string = undefined;
-  private hora3:string = undefined;
-  private hora4:string = undefined;
-  private hora5:string = undefined;
-  private hora6:string = undefined;
-  private hora7:string = undefined;
-  private hora8:string = undefined;
-  private hora9:string = undefined;
-  private hora10:string = undefined;
-  private hora11:string = undefined;
-  private hora12:string = undefined;
-  private hora13:string = undefined;
-  private hora14:string = undefined;
+  private selectedDay27:any;
+
+  private arrLunes:any;
+  private arrMartes:any;
+  private arrMiercoles:any;
+  private arrJuevez:any;
+  private arrViernes:any;
+  private arrSabado:any;
+  private arrDomingo:any;
+
+  private hora1:any;
+  private hora2:any;
+  private hora3:any;
+  private hora4:any;
+  private hora5:any;
+  private hora6:any;
+  private hora7:any;
+  private hora8:any;
+  private hora9:any;
+  private hora10:any;
+  private hora11:any;
+  private hora12:any;
+  private hora13:any;
+  private hora14:any;
 
   private diasArr = [ "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" ]
   private horasArr = [ "6:00 am - 7:00 am", "7:00 am - 8:00 am", "8:00 am - 9:00 am", "9:00 am - 10:00 am",  "10:00 am - 11:00 am", "11:00 am - 12:00 pm", "12:00 pm - 1:00 pm", "1:00 pm - 2:00 pm", "2:00 pm - 3:00 pm", "3:00 pm - 4:00 pm", "4:00 pm - 5:00 pm", "5:00 pm - 6:00 pm", "6:00 pm - 7:00 pm", "7:00 pm - 8:00 pm" ]
@@ -95,6 +105,8 @@ export class HorariosComponent implements OnInit {
 
 
 
+
+
             }
 
         })
@@ -104,12 +116,20 @@ export class HorariosComponent implements OnInit {
 
   }
 
-
   private showModal( id, user ){
     this.next = false
     this.showHours = false
     this.loading = false
-    
+    this.uid = user.id;
+
+    this.arrLunes = []
+    this.arrMartes = []
+    this.arrMiercoles = []
+    this.arrJuevez = []
+    this.arrViernes = []
+    this.arrSabado = []
+    this.arrDomingo = []
+
     if( id == 1){
       this.newDoctor()
     }
@@ -223,34 +243,70 @@ export class HorariosComponent implements OnInit {
 
   private nextView(){
     this.next = true
+    this.selectedDay = []
     this.diasSelected = ["Seleciona las horas de cada día"]
+    //dias selecionados para mostrar en actualizar
+    if ( this.updated ){
 
-    if ( this.Lunes != undefined ){
-      this.diasSelected.push("Lunes")
-    }
+        if ( this.Lunes != undefined ){
+          this.diasSelected.push("Lunes")
+        }
 
-    if ( this.Martes != undefined ){
-      this.diasSelected.push("Martes")
-    }
+        if ( this.Martes != undefined ){
+          this.diasSelected.push("Martes")
+        }
 
-    if ( this.Miercoles != undefined ){
-      this.diasSelected.push("Miércoles")
-    }
+        if ( this.Miercoles != undefined ){
+          this.diasSelected.push("Miércoles")
+        }
 
-    if ( this.Jueves != undefined ){
-      this.diasSelected.push("Jueves")
-    }
+        if ( this.Jueves != undefined ){
+          this.diasSelected.push("Jueves")
+        }
 
-    if ( this.Viernes != undefined ){
-      this.diasSelected.push("Viernes")
-    }
+        if ( this.Viernes != undefined ){
+          this.diasSelected.push("Viernes")
+        }
 
-    if ( this.Sabado != undefined ){
-      this.diasSelected.push("Sábado")
-    }
+        if ( this.Sabado != undefined ){
+          this.diasSelected.push("Sábado")
+        }
 
-    if ( this.Domingo != undefined ){
-      this.diasSelected.push("Domingo")
+        if ( this.Domingo != undefined ){
+          this.diasSelected.push("Domingo")
+        }
+   } else {
+
+          //dias selecionados para mostrar en insertar
+          if ( this.days.Lunes != undefined ){
+              this.selectedDay.push("Lunes")
+              this.diasSelected.push("Lunes")
+          }
+          if ( this.days.Martes != undefined ){
+              this.selectedDay.push("Martes")
+              this.diasSelected.push("Martes")
+          }
+          if ( this.days.Miercoles != undefined ){
+              this.selectedDay.push("Miércoles")
+              this.diasSelected.push("Miércoles")
+          }
+          if ( this.days.Jueves != undefined ){
+              this.selectedDay.push("Jueves")
+              this.diasSelected.push("Jueves")
+          }
+          if ( this.days.Viernes != undefined ){
+              this.selectedDay.push("Viernes")
+              this.diasSelected.push("Viernes")
+          }
+          if ( this.days.Sabado != undefined ){
+              this.selectedDay.push("Sábado")
+              this.diasSelected.push("Sábado")
+          }
+          if ( this.days.Domingo != undefined ){
+              this.selectedDay.push("Domingo")
+              this.diasSelected.push("Domingo")
+          }
+
     }
 
   }
@@ -258,128 +314,31 @@ export class HorariosComponent implements OnInit {
   private onChangeDays( value ) {
 
     if ( value != "Seleciona las horas de cada día" ) {
-      //setTimeout(function(){
+
       this.showHours = false
       this.loading = true
+      this.selectedDay27 = value
 
-        this._hour.getHorarios( this.uid, value ).subscribe( resp => {
+        this.hours = {
+            hora1: undefined,
+            hora2: undefined,
+            hora3: undefined,
+            hora4: undefined,
+            hora5: undefined,
+            hora6: undefined,
+            hora7: undefined,
+            hora8: undefined,
+            hora9: undefined,
+            hora10: undefined,
+            hora11: undefined,
+            hora12: undefined,
+            hora13: undefined,
+            hora14: undefined
+        }
 
-          this.hora1 = undefined
-          this.hora2 = undefined
-          this.hora3 = undefined
-          this.hora4 = undefined
-          this.hora5 = undefined
-          this.hora6 = undefined
-          this.hora7 = undefined
-          this.hora8 = undefined
-          this.hora9 = undefined
-          this.hora10 = undefined
-          this.hora11 = undefined
-          this.hora12 = undefined
-          this.hora13 = undefined
-          this.hora14 = undefined
+        this.showHours = true
+        this.loading = false
 
-          this.hours = {
-              hora1: undefined,
-              hora2: undefined,
-              hora3: undefined,
-              hora4: undefined,
-              hora5: undefined,
-              hora6: undefined,
-              hora7: undefined,
-              hora8: undefined,
-              hora9: undefined,
-              hora10: undefined,
-              hora11: undefined,
-              hora12: undefined,
-              hora13: undefined,
-              hora14: undefined,
-          }
-
-          for ( var i = 0; i <= this._hour.horarios.length - 1 ; i ++ ) {
-
-            if ( this._hour.horarios[i] == this.horasArr[0] ) { //6:00 am - 7:00 am
-              console.log("6:00 am - 7:00 am")
-              this.hora1 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[1] ) { //7:00 am - 8:00 am
-              console.log("7:00 am - 8:00 am")
-              this.hora2 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[2] ) { //8:00 am - 9:00 am
-              console.log("8:00 am - 9:00 am")
-              this.hora3 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[3] ) { //9:00 am - 10:00 am
-              console.log("9:00 am - 10:00 am")
-              this.hora4 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[4] ) { //10:00 am - 11:00 am
-              console.log("10:00 am - 11:00 am")
-              this.hora5 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[5] ) { //11:00 am - 12:00 pm
-              console.log("11:00 am - 12:00 pm")
-              this.hora6 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[6] ) { //12:00 pm - 1:00 pm
-              console.log("12:00 pm - 1:00 pm")
-              this.hora7 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[7] ) { //1:00 pm - 2:00 pm
-              console.log("1:00 pm - 2:00 pm")
-              this.hora8 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[8] ) { //2:00 pm - 3:00 pm
-              console.log("2:00 pm - 3:00 pm")
-              this.hora9 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[9] ) { //3:00 pm - 4:00 pm
-              console.log("3:00 pm - 4:00 pm")
-              this.hora10 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[10] ) { //4:00 pm - 5:00 pm
-              console.log("4:00 pm - 5:00 pm")
-              this.hora11 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[11] ) { //5:00 pm - 6:00 pm
-              console.log("5:00 pm - 6:00 pm")
-              this.hora12 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[12] ) { //6:00 pm - 7:00 pm
-              console.log("6:00 pm - 7:00 pm")
-              this.hora13 = "1"
-            }
-            if ( this._hour.horarios[i] == this.horasArr[13] ) { //7:00 pm - 8:00 pm
-              console.log("7:00 pm - 8:00 pm")
-              this.hora14 = "1"
-            }
-
-          }
-
-
-          this.hours = {
-              hora1: this.hora1,
-              hora2: this.hora2,
-              hora3: this.hora3,
-              hora4: this.hora4,
-              hora5: this.hora5,
-              hora6: this.hora6,
-              hora7: this.hora7,
-              hora8: this.hora8,
-              hora9: this.hora9,
-              hora10: this.hora10,
-              hora11: this.hora11,
-              hora12: this.hora12,
-              hora13: this.hora13,
-              hora14: this.hora14,
-          }
-          this.showHours = true
-          this.loading = false
-
-        })
-
-      //},3000);
     } else {
       this.showHours = false
       this.loading = false
@@ -387,8 +346,8 @@ export class HorariosComponent implements OnInit {
 
 
 
-  }
 
+  }
 
   private preView(){
     this.next = false
@@ -396,60 +355,56 @@ export class HorariosComponent implements OnInit {
 
   private showDelete( user ){
     this.uid = user;
-    console.log( this.uid );
     $('#eliminarUsuario').modal('show');
   }
 
   private createUser(){
     this.err = false
-    // this._user.createUser(this.users).then( (data => {
-    //   let uid = data.uid
-    //
-    //   this._user.addUser( uid, this.users ).then( (result) => {
-    //
-    //       this._user.addDoctor( uid, this.doctors ).then( (result) => {
-    //         this.result = true
-    //         this.success = "Se ha registrado el usuario correctamente"
-    //       }).catch( (err) => {
-    //         console.log("error de usuario en db: ", err)
-    //       })
-    //
-    //   }).catch( (err) => {
-    //     console.log("error de usuario en db: ", err)
-    //   })
-    //
+
+    console.log("guardar")
+    console.log( this.arrLunes )
+
+
+
+    // let data = {
+    //   id: 'bbjimesunabbnojona',
+    //   dia: 'Lunes',
+    //   hora: '2:27'
+    // }
+    // this._hour.addHour( data ).then( (data => {
+    //   this.result = true
+    //   this.success = "Se ha guardado el horario correctamente"
     // })).catch( (error) => {
-    //   if (error.code == "auth/invalid-email") {
-    //     this.err = true
-    //     this.error = "Este no es un correo valido"
-    //     console.log("auth/invalid-email")
-    //   }
+    //   console.log("error")
+    //   console.log(error)
     //   if (error.code == "auth/email-already-in-use") {
     //     this.err = true
     //     this.error = "Este correo ya tiene una cuenta"
     //     console.log("auth/email-already-in-use")
     //   }
-    //   console.log("error de autenticacion: ", error)
     // })
   }
 
   private delete(){
     this.err = false
     this.result = false
-    this._user.deleteUser( this.uid ).then( (resp) => {
-      this.result = true
-      this.success = "Se ha eliminado con exito el usuario"
-    }).catch( (error) => {
-      this.err = true
-      this.error = "Se ha producido un error, intentalo mas tarde"
-    })
+    this.arrLunes = []
+    // this._hour.deleteUser( this.uid ).then( (resp) => {
+    //   this.result = true
+    //   this.success = "Se ha eliminado con exito el usuario"
+    // }).catch( (error) => {
+    //   this.err = true
+    //   this.error = "Se ha producido un error, intentalo mas tarde"
+    // })
 
   }
 
   private updateUser(){
     this.err = false
     this.result = false
-    // this._user.update( this.uid, this.users ).then( (resp) => {
+    this.arrLunes = []
+    console.log( this.selectedDay )
+    // this._hour.update( this.users ).then( (resp) => {
     //   this.result = true
     //   this.success = "Se han hecho los cambios correctamente"
     // }).catch( (error) => {
@@ -458,6 +413,79 @@ export class HorariosComponent implements OnInit {
     // })
   }
 
+  private remove(arr, item) {
+     var i;
+     while((i = arr.indexOf(item)) !== -1) {
+       arr.splice(i, 1);
+     }
+  }
+
+  private conta = 0
+  private selectData(){
+
+    if ( this.conta == 0) {
+      this.conta += 1
+      this.selectData()
+    } else {
+    if ( this.selectedDay27 == this.diasArr[0] ) {
+
+        console.log( this.hours )
+        this.hora1 = this.hours.hora1
+        console.log( this.hora1 )
+
+        if ( this.hours.hora1 ) { //
+            this.arrLunes.push("6:00 am - 7:00 am")
+        } else {
+            this.remove(this.arrLunes, "6:00 am - 7:00 am")
+        }
+        if ( this.hours.hora2  ) { //
+            this.arrLunes.push("7:00 am - 8:00 am")
+        }
+        if ( this.hours.hora3 ) { //
+            this.arrLunes.push("8:00 am - 9:00 am")
+        }
+        if ( this.hours.hora4  ) { //
+            this.arrLunes.push("9:00 am - 10:00 am")
+        }
+        if ( this.hours.hora5  ) { //
+            this.arrLunes.push("10:00 am - 11:00 am")
+        }
+        if ( this.hours.hora6  ) { //
+            this.arrLunes.push("11:00 am - 12:00 pm")
+        }
+        if ( this.hours.hora7  ) { //
+            this.arrLunes.push("12:00 pm - 1:00 pm")
+        }
+        if ( this.hours.hora8  ) { //
+            this.arrLunes.push("1:00 pm - 2:00 pm")
+        }
+        if ( this.hours.hora9  ) { //
+            this.arrLunes.push("2:00 pm - 3:00 pm")
+        }
+        if ( this.hours.hora10   ) { //
+            this.arrLunes.push("3:00 pm - 4:00 pm")
+        }
+        if ( this.hours.hora11  ) { //
+            this.arrLunes.push("4:00 pm - 5:00 pm")
+        }
+        if ( this.hours.hora12  ) { //
+            this.arrLunes.push("5:00 pm - 6:00 pm")
+        }
+        if ( this.hours.hora13  ) { //
+            this.arrLunes.push("6:00 pm - 7:00 pm")
+        }
+        if ( this.hours.hora14  ) { //
+            this.arrLunes.push("7:00 pm - 8:00 pm")
+        }
+
+    }
+
+    }
+
+
+
+
+  }
 
 
 }

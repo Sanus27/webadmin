@@ -76,26 +76,22 @@ export class HorariosService {
     return this.users
   }
 
-  public addHour(user){
-    let uid:string = user.id;
-    return this.horarioscollection.doc( uid ).set({
-      avatar: "userDefaults.png",
-      apellido: user.lastname,
-      nombre: user.name,
-      estado: "0",
-      tipo: "Medico"
+
+
+
+  public addHour( user ){
+    return this.horarioscollection.doc( user.id ).collection( user.dia ).add({
+      hora: user.hora,
     })
   }
 
-  public deleteHour( user ) {
-    let uid:string = user.id;
-    return this.horarioscollection.doc( uid ).delete()
+  public deleteHour( id ) {
+    return this.horarioscollection.doc( id ).delete()
   }
 
-  public updateHour( id, user ) {
-    return this.horarioscollection.doc( id ).update({
-      apellido: user.lastname,
-      nombre: user.name,
+  public updateHour( user ) {
+    return this.horarioscollection.doc( user.id ).collection( user.dia ).add({
+      hora: user.hora,
     })
   }
 

@@ -55,7 +55,7 @@ export class LoginComponent  implements OnInit{
             setTimeout(() => {
 
               let dataUser = this._auth.userInfo;
-              let typeUser:string? = dataUser[0]["tipo"];
+              let typeUser = dataUser[0]["tipo"];
 
               if ( typeUser != null || typeUser != undefined ){
                   if( typeUser === "Admin"){
