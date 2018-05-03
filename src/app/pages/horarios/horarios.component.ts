@@ -29,7 +29,6 @@ export class HorariosComponent implements OnInit {
   private arr: any;
   private next:boolean;
   private days = { Lunes:'', Martes: '', Miercoles: '', Jueves: '', Viernes: '', Sabado: '', Domingo: '' };
-  private hours = { hora1: '', hora2: '', hora3: '', hora4: '', hora5: '', hora6: '', hora7: '', hora8: '', hora9: '', hora10: '', hora11: '', hora12: '', hora13: '', hora14: '' };
 
   private doctorcollection: AngularFirestoreCollection<Doctores>;
   private Lunes:string = "1";
@@ -104,9 +103,6 @@ export class HorariosComponent implements OnInit {
               });
 
 
-
-
-
             }
 
         })
@@ -151,22 +147,22 @@ export class HorariosComponent implements OnInit {
           Sabado: undefined,
           Domingo: undefined
       }
-      this.hours = {
-          hora1: undefined,
-          hora2: undefined,
-          hora3: undefined,
-          hora4: undefined,
-          hora5: undefined,
-          hora6: undefined,
-          hora7: undefined,
-          hora8: undefined,
-          hora9: undefined,
-          hora10: undefined,
-          hora11: undefined,
-          hora12: undefined,
-          hora13: undefined,
-          hora14: undefined,
-      }
+
+      this.hora1 = false;
+      this.hora2 = false;
+      this.hora3 = false;
+      this.hora4 = false;
+      this.hora5 = false;
+      this.hora6 = false;
+      this.hora7 = false;
+      this.hora8 = false;
+      this.hora9 = false;
+      this.hora10 = false;
+      this.hora11 = false;
+      this.hora12 = false;
+      this.hora13 = false;
+      this.hora14 = false;
+
       $('#modal').modal('show');
   }
 
@@ -319,22 +315,20 @@ export class HorariosComponent implements OnInit {
       this.loading = true
       this.selectedDay27 = value
 
-        this.hours = {
-            hora1: undefined,
-            hora2: undefined,
-            hora3: undefined,
-            hora4: undefined,
-            hora5: undefined,
-            hora6: undefined,
-            hora7: undefined,
-            hora8: undefined,
-            hora9: undefined,
-            hora10: undefined,
-            hora11: undefined,
-            hora12: undefined,
-            hora13: undefined,
-            hora14: undefined
-        }
+      this.hora1 = false;
+      this.hora2 = false;
+      this.hora3 = false;
+      this.hora4 = false;
+      this.hora5 = false;
+      this.hora6 = false;
+      this.hora7 = false;
+      this.hora8 = false;
+      this.hora9 = false;
+      this.hora10 = false;
+      this.hora11 = false;
+      this.hora12 = false;
+      this.hora13 = false;
+      this.hora14 = false;
 
         this.showHours = true
         this.loading = false
@@ -420,70 +414,27 @@ export class HorariosComponent implements OnInit {
      }
   }
 
-  private conta = 0
-  private selectData(){
+  private selectData( value, event ) {
 
-    if ( this.conta == 0) {
-      this.conta += 1
-      this.selectData()
-    } else {
     if ( this.selectedDay27 == this.diasArr[0] ) {
 
-        console.log( this.hours )
-        this.hora1 = this.hours.hora1
-        console.log( this.hora1 )
+        if ( value == "hora1") {
+            if (event) {
+                this.arrLunes.push("6:00 am - 7:00 am")
+            } else {
+                this.remove(this.arrLunes, "6:00 am - 7:00 am")
+            }
+        }
 
-        if ( this.hours.hora1 ) { //
-            this.arrLunes.push("6:00 am - 7:00 am")
-        } else {
-            this.remove(this.arrLunes, "6:00 am - 7:00 am")
-        }
-        if ( this.hours.hora2  ) { //
-            this.arrLunes.push("7:00 am - 8:00 am")
-        }
-        if ( this.hours.hora3 ) { //
-            this.arrLunes.push("8:00 am - 9:00 am")
-        }
-        if ( this.hours.hora4  ) { //
-            this.arrLunes.push("9:00 am - 10:00 am")
-        }
-        if ( this.hours.hora5  ) { //
-            this.arrLunes.push("10:00 am - 11:00 am")
-        }
-        if ( this.hours.hora6  ) { //
-            this.arrLunes.push("11:00 am - 12:00 pm")
-        }
-        if ( this.hours.hora7  ) { //
-            this.arrLunes.push("12:00 pm - 1:00 pm")
-        }
-        if ( this.hours.hora8  ) { //
-            this.arrLunes.push("1:00 pm - 2:00 pm")
-        }
-        if ( this.hours.hora9  ) { //
-            this.arrLunes.push("2:00 pm - 3:00 pm")
-        }
-        if ( this.hours.hora10   ) { //
-            this.arrLunes.push("3:00 pm - 4:00 pm")
-        }
-        if ( this.hours.hora11  ) { //
-            this.arrLunes.push("4:00 pm - 5:00 pm")
-        }
-        if ( this.hours.hora12  ) { //
-            this.arrLunes.push("5:00 pm - 6:00 pm")
-        }
-        if ( this.hours.hora13  ) { //
-            this.arrLunes.push("6:00 pm - 7:00 pm")
-        }
-        if ( this.hours.hora14  ) { //
-            this.arrLunes.push("7:00 pm - 8:00 pm")
+        if ( value == "hora2") {
+            if (event) {
+                this.arrLunes.push("7:00 am - 8:00 am")
+            } else {
+                this.remove(this.arrLunes, "7:00 am - 8:00 am")
+            }
         }
 
     }
-
-    }
-
-
-
 
   }
 

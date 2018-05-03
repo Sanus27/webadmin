@@ -159,18 +159,15 @@
                 <div class="col-6" *ngIf="showHours">
 
 
-                  <input class="form-check-input" type="checkbox" id="hora1" (ngModelChange)="selectData()" [(ngModel)]="hours.hora1">
-
-
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora1" (ngModelChange)="selectData()" [(ngModel)]="hours.hora1">
+                      <input class="form-check-input" type="checkbox" id="hora1" (ngModelChange)="selectData( 'hora1', $event )" [(ngModel)]="hora1">
                       <label class="form-check-label" for="hora1">
                         6:00 am - 7:00 am
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora2" (ngModelChange)="selectData()" [(ngModel)]="hours.hora2">
+                      <input class="form-check-input" type="checkbox" id="hora2" (ngModelChange)="selectData( 'hora2', $event )" [(ngModel)]="hora2">
                       <label class="form-check-label" for="hora2">
                         7:00 am - 8:00 am
                       </label>
@@ -182,14 +179,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora3" (ngModelChange)="selectData()" [(ngModel)]="hours.hora3">
+                      <input class="form-check-input" type="checkbox" id="hora3" (ngModelChange)="selectData()" [(ngModel)]="hora3">
                       <label class="form-check-label" for="hora3">
                         8:00 am - 9:00 am
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora4" (ngModelChange)="selectData()" [(ngModel)]="hours.hora4">
+                      <input class="form-check-input" type="checkbox" id="hora4" (ngModelChange)="selectData()" [(ngModel)]="hora4">
                       <label class="form-check-label" for="hora4">
                         9:00 am - 10:00 am
                       </label>
@@ -200,14 +197,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora5" (ngModelChange)="selectData()" [(ngModel)]="hours.hora5">
+                      <input class="form-check-input" type="checkbox" id="hora5" (ngModelChange)="selectData()" [(ngModel)]="hora5">
                       <label class="form-check-label" for="hora5">
                         10:00 am - 11:00 am
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora6" (ngModelChange)="selectData()" [(ngModel)]="hours.hora6">
+                      <input class="form-check-input" type="checkbox" id="hora6" (ngModelChange)="selectData()" [(ngModel)]="hora6">
                       <label class="form-check-label" for="hora6">
                         11:00 am - 12:00 pm
                       </label>
@@ -219,14 +216,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora7" (ngModelChange)="selectData()" [(ngModel)]="hours.hora7">
+                      <input class="form-check-input" type="checkbox" id="hora7" (ngModelChange)="selectData()" [(ngModel)]="hora7">
                       <label class="form-check-label" for="hora7">
                         12:00 pm - 1:00 pm
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora8" (ngModelChange)="selectData()" [(ngModel)]="hours.hora8">
+                      <input class="form-check-input" type="checkbox" id="hora8" (ngModelChange)="selectData()" [(ngModel)]="hora8">
                       <label class="form-check-label" for="hora8">
                         1:00 pm - 2:00 pm
                       </label>
@@ -237,14 +234,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora9" (ngModelChange)="selectData()" [(ngModel)]="hours.hora9">
+                      <input class="form-check-input" type="checkbox" id="hora9" (ngModelChange)="selectData()" [(ngModel)]="hora9">
                       <label class="form-check-label" for="hora9">
                         2:00 pm - 3:00 pm
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora10" (ngModelChange)="selectData()" [(ngModel)]="hours.hora10">
+                      <input class="form-check-input" type="checkbox" id="hora10" (ngModelChange)="selectData()" [(ngModel)]="hora10">
                       <label class="form-check-label" for="hora10">
                         3:00 pm - 4:00 pm
                       </label>
@@ -256,14 +253,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora11" (ngModelChange)="selectData()" [(ngModel)]="hours.hora11">
+                      <input class="form-check-input" type="checkbox" id="hora11" (ngModelChange)="selectData()" [(ngModel)]="hora11">
                       <label class="form-check-label" for="hora11">
                         4:00 pm - 5:00 pm
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora12" (ngModelChange)="selectData()" [(ngModel)]="hours.hora12">
+                      <input class="form-check-input" type="checkbox" id="hora12" (ngModelChange)="selectData()" [(ngModel)]="hora12">
                       <label class="form-check-label" for="hora12">
                         5:00 pm - 6:00 pm
                       </label>
@@ -274,14 +271,14 @@
                 <div class="col-6" *ngIf="showHours">
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora13" (ngModelChange)="selectData()" [(ngModel)]="hours.hora13">
+                      <input class="form-check-input" type="checkbox" id="hora13" (ngModelChange)="selectData()" [(ngModel)]="hora13">
                       <label class="form-check-label" for="hora13">
                         6:00 pm - 7:00 pm
                       </label>
                     </div>
 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="hora14" (ngModelChange)="selectData()" [(ngModel)]="hours.hora14">
+                      <input class="form-check-input" type="checkbox" id="hora14" (ngModelChange)="selectData()" [(ngModel)]="hora14">
                       <label class="form-check-label" for="hora14">
                         7:00 pm - 8:00 pm
                       </label>
